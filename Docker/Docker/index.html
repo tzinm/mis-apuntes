@@ -1,0 +1,2175 @@
+
+
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Apuntes sobre lo que voy aprendiendo">
+      
+      
+      
+        <meta name="author" content="Tzinm">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.4">
+    
+    
+      
+        <title>Conociendo Docker - Documentacion</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.c4007cdc.min.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.8435c73a.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ffc107">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:300,400,400i,700%7CPT+Sans+Mono&display=fallback">
+        <style>body,input{font-family:"PT Sans",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"PT Sans Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    <body dir="" data-md-color-primary="amber" data-md-color-accent="brown">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#que-es-docker" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Cabecera">
+    <a href="../.." title="Documentacion" class="md-header-nav__button md-logo" aria-label="Documentacion">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M3 5h4v1H3V5zm0 3h4V7H3v1zm0 2h4V9H3v1zm11-5h-4v1h4V5zm0 2h-4v1h4V7zm0 2h-4v1h4V9zm2-6v9c0 .55-.45 1-1 1H9.5l-1 1-1-1H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h5.5l1 1 1-1H15c.55 0 1 .45 1 1zm-8 .5L7.5 3H2v9h6V3.5zm7-.5H9.5l-.5.5V12h6V3z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Documentacion
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Conociendo Docker
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Limpiar" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/tzinm/mis-apuntes" title="Ir al repositorio" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tzinm/mis-apuntes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+          
+
+  
+
+<nav class="md-tabs md-tabs--active" aria-label="Pestañas" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." class="md-tabs__link">
+        Home
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="./" class="md-tabs__link md-tabs__link--active">
+          Docker
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../OpenMediaVault/Politica-actualizaciones/" class="md-tabs__link">
+          OpenMediaVault
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../MacOS/personalizando-terminal/" class="md-tabs__link">
+          MacOS
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Documentacion" class="md-nav__button md-logo" aria-label="Documentacion">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M3 5h4v1H3V5zm0 3h4V7H3v1zm0 2h4V9H3v1zm11-5h-4v1h4V5zm0 2h-4v1h4V7zm0 2h-4v1h4V9zm2-6v9c0 .55-.45 1-1 1H9.5l-1 1-1-1H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h5.5l1 1 1-1H15c.55 0 1 .45 1 1zm-8 .5L7.5 3H2v9h6V3.5zm7-.5H9.5l-.5.5V12h6V3z"/></svg>
+
+    </a>
+    Documentacion
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/tzinm/mis-apuntes" title="Ir al repositorio" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tzinm/mis-apuntes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Docker
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Docker" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Docker
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Conociendo Docker
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="./" title="Conociendo Docker" class="md-nav__link md-nav__link--active">
+      Conociendo Docker
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#que-es-docker" class="md-nav__link">
+    ¿Qué es Docker?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#que-es-una-imagen" class="md-nav__link">
+    ¿Qué es una imagen?
+  </a>
+  
+    <nav class="md-nav" aria-label="¿Qué es una imagen?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#descargando-imagenes" class="md-nav__link">
+    Descargando imágenes
+  </a>
+  
+    <nav class="md-nav" aria-label="Descargando imágenes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-es-una-etiqueta-tag" class="md-nav__link">
+    ¿Qué es una etiqueta (tag)?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#desarrollando-imagenes" class="md-nav__link">
+    Desarrollando imágenes
+  </a>
+  
+    <nav class="md-nav" aria-label="Desarrollando imágenes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dockerfile" class="md-nav__link">
+    Dockerfile
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-build" class="md-nav__link">
+    Docker Build
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-stage-builds" class="md-nav__link">
+    Multi-Stage Builds
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dangling-images" class="md-nav__link">
+    Dangling images
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contenedores" class="md-nav__link">
+    Contenedores
+  </a>
+  
+    <nav class="md-nav" aria-label="Contenedores">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-nos-encontramos-dentro-de-un-contenedor" class="md-nav__link">
+    ¿Qué nos encontramos dentro de un contenedor?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contenedor-vs-maquina-virtual" class="md-nav__link">
+    Contenedor VS Máquina Virtual
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-run" class="md-nav__link">
+    Docker run
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitando-recursos" class="md-nav__link">
+    Limitando recursos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#politicas-de-reinicio" class="md-nav__link">
+    Políticas de reinicio
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volumenes" class="md-nav__link">
+    Volúmenes
+  </a>
+  
+    <nav class="md-nav" aria-label="Volúmenes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#volumenes-host" class="md-nav__link">
+    Volúmenes Host
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#volumenes-anonymous" class="md-nav__link">
+    Volúmenes Anonymous
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#volumenes-nombrados" class="md-nav__link">
+    Volúmenes Nombrados
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dangling-volumes" class="md-nav__link">
+    Dangling Volumes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#redes" class="md-nav__link">
+    Redes
+  </a>
+  
+    <nav class="md-nav" aria-label="Redes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creacion-de-redes" class="md-nav__link">
+    Creación de redes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conectando-un-contenedor-a-una-red-diferente" class="md-nav__link">
+    Conectando un contenedor a una red diferente
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conectar-contenedores-a-la-misma-red" class="md-nav__link">
+    Conectar contenedores a la misma red
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contenedores-en-mas-de-una-red" class="md-nav__link">
+    Contenedores en más de una red
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eliminar-redes" class="md-nav__link">
+    Eliminar redes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tipos-de-drivers-de-red" class="md-nav__link">
+    Tipos de drivers de red
+  </a>
+  
+    <nav class="md-nav" aria-label="Tipos de drivers de red">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bridge" class="md-nav__link">
+    Bridge
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#host" class="md-nav__link">
+    Host
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overlay" class="md-nav__link">
+    Overlay
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macvlan" class="md-nav__link">
+    Macvlan
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#none" class="md-nav__link">
+    None
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-compose" class="md-nav__link">
+    Docker Compose
+  </a>
+  
+    <nav class="md-nav" aria-label="Docker Compose">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comenzando-con-docker-compose" class="md-nav__link">
+    Comenzando con Docker Compose
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-compose-build" class="md-nav__link">
+    Docker-compose build
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#seguridad" class="md-nav__link">
+    Seguridad
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#otros-conceptos" class="md-nav__link">
+    Otros conceptos
+  </a>
+  
+    <nav class="md-nav" aria-label="Otros conceptos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#docker-registry" class="md-nav__link">
+    Docker Registry
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comandos" class="md-nav__link">
+    Comandos
+  </a>
+  
+    <nav class="md-nav" aria-label="Comandos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comandos-mas-utilizados" class="md-nav__link">
+    Comandos más utilizados
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#otros-comandos" class="md-nav__link">
+    Otros comandos
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fuentes" class="md-nav__link">
+    Fuentes
+  </a>
+  
+    <nav class="md-nav" aria-label="Fuentes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#docker-bases" class="md-nav__link">
+    Docker bases
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-en-profundidad" class="md-nav__link">
+    Docker en profundidad
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Contenedores/" title="Contenedores de ejemplo" class="md-nav__link">
+      Contenedores de ejemplo
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      OpenMediaVault
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="OpenMediaVault" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        OpenMediaVault
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../OpenMediaVault/Politica-actualizaciones/" title="Políticas de actualizaciones" class="md-nav__link">
+      Políticas de actualizaciones
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../OpenMediaVault/LVM/" title="Logical Volume Management" class="md-nav__link">
+      Logical Volume Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../OpenMediaVault/Rclone/" title="Rclone in OMV" class="md-nav__link">
+      Rclone in OMV
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      MacOS
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="MacOS" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        MacOS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../MacOS/personalizando-terminal/" title="Terminal" class="md-nav__link">
+      Terminal
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#que-es-docker" class="md-nav__link">
+    ¿Qué es Docker?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#que-es-una-imagen" class="md-nav__link">
+    ¿Qué es una imagen?
+  </a>
+  
+    <nav class="md-nav" aria-label="¿Qué es una imagen?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#descargando-imagenes" class="md-nav__link">
+    Descargando imágenes
+  </a>
+  
+    <nav class="md-nav" aria-label="Descargando imágenes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-es-una-etiqueta-tag" class="md-nav__link">
+    ¿Qué es una etiqueta (tag)?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#desarrollando-imagenes" class="md-nav__link">
+    Desarrollando imágenes
+  </a>
+  
+    <nav class="md-nav" aria-label="Desarrollando imágenes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dockerfile" class="md-nav__link">
+    Dockerfile
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-build" class="md-nav__link">
+    Docker Build
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-stage-builds" class="md-nav__link">
+    Multi-Stage Builds
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dangling-images" class="md-nav__link">
+    Dangling images
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contenedores" class="md-nav__link">
+    Contenedores
+  </a>
+  
+    <nav class="md-nav" aria-label="Contenedores">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-nos-encontramos-dentro-de-un-contenedor" class="md-nav__link">
+    ¿Qué nos encontramos dentro de un contenedor?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contenedor-vs-maquina-virtual" class="md-nav__link">
+    Contenedor VS Máquina Virtual
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-run" class="md-nav__link">
+    Docker run
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitando-recursos" class="md-nav__link">
+    Limitando recursos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#politicas-de-reinicio" class="md-nav__link">
+    Políticas de reinicio
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volumenes" class="md-nav__link">
+    Volúmenes
+  </a>
+  
+    <nav class="md-nav" aria-label="Volúmenes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#volumenes-host" class="md-nav__link">
+    Volúmenes Host
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#volumenes-anonymous" class="md-nav__link">
+    Volúmenes Anonymous
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#volumenes-nombrados" class="md-nav__link">
+    Volúmenes Nombrados
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dangling-volumes" class="md-nav__link">
+    Dangling Volumes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#redes" class="md-nav__link">
+    Redes
+  </a>
+  
+    <nav class="md-nav" aria-label="Redes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creacion-de-redes" class="md-nav__link">
+    Creación de redes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conectando-un-contenedor-a-una-red-diferente" class="md-nav__link">
+    Conectando un contenedor a una red diferente
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conectar-contenedores-a-la-misma-red" class="md-nav__link">
+    Conectar contenedores a la misma red
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contenedores-en-mas-de-una-red" class="md-nav__link">
+    Contenedores en más de una red
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eliminar-redes" class="md-nav__link">
+    Eliminar redes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tipos-de-drivers-de-red" class="md-nav__link">
+    Tipos de drivers de red
+  </a>
+  
+    <nav class="md-nav" aria-label="Tipos de drivers de red">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bridge" class="md-nav__link">
+    Bridge
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#host" class="md-nav__link">
+    Host
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overlay" class="md-nav__link">
+    Overlay
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macvlan" class="md-nav__link">
+    Macvlan
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#none" class="md-nav__link">
+    None
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-compose" class="md-nav__link">
+    Docker Compose
+  </a>
+  
+    <nav class="md-nav" aria-label="Docker Compose">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comenzando-con-docker-compose" class="md-nav__link">
+    Comenzando con Docker Compose
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-compose-build" class="md-nav__link">
+    Docker-compose build
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#seguridad" class="md-nav__link">
+    Seguridad
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#otros-conceptos" class="md-nav__link">
+    Otros conceptos
+  </a>
+  
+    <nav class="md-nav" aria-label="Otros conceptos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#docker-registry" class="md-nav__link">
+    Docker Registry
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comandos" class="md-nav__link">
+    Comandos
+  </a>
+  
+    <nav class="md-nav" aria-label="Comandos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comandos-mas-utilizados" class="md-nav__link">
+    Comandos más utilizados
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#otros-comandos" class="md-nav__link">
+    Otros comandos
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fuentes" class="md-nav__link">
+    Fuentes
+  </a>
+  
+    <nav class="md-nav" aria-label="Fuentes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#docker-bases" class="md-nav__link">
+    Docker bases
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-en-profundidad" class="md-nav__link">
+    Docker en profundidad
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                  <h1>Conociendo Docker</h1>
+                
+                <h2 id="que-es-docker">¿Qué es Docker?<a class="headerlink" href="#que-es-docker" title="Permanent link">#</a></h2>
+<p>Es una herramienta que permite desplegar aplicaciones en contenedores de forma rápida y portable. Los términos que más escucharemos cuando hablamos de Docker serán "<strong>contenedores</strong>" e "<strong>imágenes</strong>".</p>
+<p>Docker se encuentra disponible para las principales plataformas, como Windows, Linux o MacOS. La máquina que aloja el servicio "<strong>Docker</strong>" se denomina <strong>Docker Host</strong>. Dentro de Docker podemos destacar tres conceptos.</p>
+<ul>
+<li><strong>Docker Daemon:</strong> representa el servidor de Docker.</li>
+<li><strong>Rest API:</strong> utilizado para la comunicación bidireccional entre cliente y servidor.</li>
+<li><strong>Docker CLI (Command Line Interface):</strong> representa el cliente de Docker.</li>
+</ul>
+<p>*<em>A pesar de que se haya mencionado la línea de comandos como cliente Docker, también existe entorno gráfico para interactuar con el servidor Docker.</em></p>
+<p>Cuando interactuamos con contenedores o imágenes, lo hacemos a través del cliente de Docker, con lo cual nos interesa saber que es lo que podemos gestionar.</p>
+<ul>
+<li><a href="#¿Qué es una imagen?">Imágenes</a></li>
+<li><a href="#¿Qué es un contenedor?">Contenedores</a></li>
+<li><a href="#¿Qué es un volumen">Volúmenes</a></li>
+<li><a href="#Redes">Redes</a></li>
+<li><a href="#Docker-Compose">Docker-Compose</a></li>
+<li><a href="#Seguridad">Seguridad</a></li>
+<li><a href="#Comandos">Comandos</a></li>
+<li>
+<p><a href="#Otros conceptos">Otros conceptos</a></p>
+</li>
+<li>
+<p><a href="#Fuentes">Fuentes</a></p>
+</li>
+</ul>
+<h2 id="que-es-una-imagen">¿Qué es una imagen?<a class="headerlink" href="#que-es-una-imagen" title="Permanent link">#</a></h2>
+<p>Una imagen en Docker es una especie de instantánea de un contenedor. Para entenderlo de una forma más sencilla, desglosaremos una imagen en diferentes capas.</p>
+<ul>
+<li><strong>Primera capa (FROM):</strong> se define el sistema operativo (Alpine, CentOS, Ubuntu), de aquí partirá el tamaño mínimo de nuestra imagen.</li>
+<li><strong>Segunda capa (RUN):</strong> se ejecutan diferentes comandos, habitualmente para la instalación de paquetes necesarios para nuestra aplicación.</li>
+<li><strong>Tercera capa (CMD):</strong> es la parte que mantendrá en ejecución el contenedor.</li>
+</ul>
+<p>Estas capas se definen en el fichero <strong>Dockerfile **y son de sólo lectura (RO - Read Only). Aquí podemos ver un ejemplo de un **Dockerfile</strong>.</p>
+<p><div class="highlight"><pre><span></span><code><span class="k">FROM</span> <span class="s">centos:7</span>
+
+<span class="k">RUN</span> yum -y install httpd
+
+<span class="k">CMD</span> <span class="p">[</span><span class="s2">&quot;apachectl&quot;</span><span class="p">,</span><span class="s2">&quot;-DFOREGROUND&quot;</span><span class="p">]</span>
+</code></pre></div>
+El parámetro <strong>CMD</strong> es el que mantiene "<strong>vivo</strong>" el contenedor, en el ejemplo anterior es necesario utilizar como parámetro <code>-DFOREGROUND</code> del comando <code>apachectl</code> para que el contenedor se mantenga en ejecución. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Únicamente podemos encontrar una instrucción <strong>CMD</strong> en un <strong>Dockerfile</strong>, en caso de que   haya más de una, sólo se tendrá en cuenta la última</p>
+</div>
+<p>Podemos definir la instrucción <strong>CMD</strong> de tres modos diferentes:</p>
+<ol><li><b>Execform</b>, es la forma más adecuada.</li>
+
+<div class="highlight"><pre><span></span><code><span class="k">CMD</span> <span class="p">[</span><span class="s2">&quot;ejecutable&quot;</span><span class="p">,</span><span class="s2">&quot;parámetro1&quot;</span><span class="p">,</span><span class="s2">&quot;parámetro2&quot;</span><span class="p">]</span>
+
+<span class="c">#Ruta completa al ejecutable.</span>
+<span class="k">CMD</span> <span class="p">[</span><span class="s2">&quot;/bin/echo&quot;</span><span class="p">,</span><span class="s2">&quot;Hola mundo&quot;</span><span class="p">]</span>
+
+<span class="c">#Bash como ejecutable, pasando el parámetro &quot;-c&quot; podemos ejecutar comandos como si estuviesemos en la terminal.</span>
+<span class="k">CMD</span> <span class="p">[</span><span class="s2">&quot;/bin/bash&quot;</span><span class="p">,</span><span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;echo Hola mundo&quot;</span><span class="p">]</span>
+</code></pre></div>
+
+<li>Como parámetros que acompañan a la instrucción <b>ENTRYPOINT</b>.</li>
+
+<div class="highlight"><pre><span></span><code><span class="k">CMD</span> <span class="p">[</span><span class="s2">&quot;parámetro1&quot;</span><span class="p">,</span><span class="s2">&quot;parámetro2&quot;</span><span class="p">]</span>
+</code></pre></div>
+
+<li>En formato <b>shell</b>, por debajo ejecuta <code>/bin/sh -c</code>.</li></ol>
+
+<div class="highlight"><pre><span></span><code><span class="k">CMD</span> comando parámetro1 parámetro2
+</code></pre></div>
+
+<p>La diferencia fundamental entre <strong>CMD</strong> y <strong>ENTRYPOINT</strong> se basa en que con el primero de ellos, cuando ejecutamos <code>docker run</code> con un comando específico, este comando sobrescribirá el comando definido en el fichero <strong>Dockerfile</strong>.</p>
+<ul>
+<li>
+<p><strong>CMD</strong> será el que utilizaremos habitualmente porque nos permite pasar parámetros cuando iniciemos el contenedor.</p>
+</li>
+<li>
+<p><strong>ENTRYPOINT</strong> en caso de querer tener un contenedor como ejecutable, sin intención de pasar ningún parámetro adicional.</p>
+</li>
+</ul>
+<h3 id="descargando-imagenes">Descargando imágenes<a class="headerlink" href="#descargando-imagenes" title="Permanent link">#</a></h3>
+<p>Para la descarga de imágenes utilizaremos el comando <code>docker pull</code>. Es posible pasar diferentes parámetros, uno de los más habituales es el <strong>tag</strong> o <strong>etiqueta</strong>. Esta etiqueta nos permite elegir entre diferentes versiones del mismo contenedor, una imagen compatible con la arquitectura de nuestro procesador o una versión, de la aplicación empaquetada en la imagen, particular que necesitemos.</p>
+<p><strong>Ejemplo:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">#Descarga la versión 3.6.5 de mongo</span>
+docker pull mongo:3.6.5-jessie
+</code></pre></div>
+
+<p>En el ejemplo anterior hemos descargado una versión específica indicándole el <strong>tag</strong> después de los dos puntos.</p>
+<h4 id="que-es-una-etiqueta-tag">¿Qué es una etiqueta (tag)?<a class="headerlink" href="#que-es-una-etiqueta-tag" title="Permanent link">#</a></h4>
+<p>Una <strong>etiqueta</strong> o <strong>tag</strong> identifica la imagen que vamos a descargarnos. Es una forma sencilla de <strong>versionar</strong> las imágenes. Si no establecemos este parámetro, la etiqueta por defecto que utilizará Docker es <strong>latest</strong>. Las etiquetas disponibles por cada imagen se encuentran enumeradas en el propio repositorio, además en la documentación se encuentran instrucciones que facilitan la elección del tag de la imagen.</p>
+<p>A continuación se encuentran dos enlaces que explican de forma extendida las etiquetas de las imágenes de Docker y que formas sencillas hay para versionar una imagen.</p>
+<p><a href="https://medium.com/@mccode/the-misunderstood-docker-tag-latest-af3babfd6375">The misunderstood Docker tag: latest</a></p>
+<p><a href="https://medium.com/@mccode/using-semantic-versioning-for-docker-image-tags-dfde8be06699">Using Semver for Docker Image Tags</a></p>
+<h3 id="desarrollando-imagenes">Desarrollando imágenes<a class="headerlink" href="#desarrollando-imagenes" title="Permanent link">#</a></h3>
+<p>La forma sencilla para comenzar ha realizar pruebas es crear un directorio de trabajo que utilizaremos para  desarrollar las primeras imágenes. En este directorio es necesario contar con un fichero <strong>Dockerfile</strong> (lo podemos crear ejecutando <code>touch Dockerfile</code>), el cual contendrá las capas que hemos visto más arriba. Este fichero es el utilizado por el comando <code>docker build</code> para crear las imágenes.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Podemos llamar al fichero Dockerfile de cualquier otro modo, pero cuando creemos el contenedor (<code>docker build</code>) deberemos indicarle con el parámetro <code>-f</code> el nombre del fichero.</p>
+</div>
+<h4 id="dockerfile">Dockerfile<a class="headerlink" href="#dockerfile" title="Permanent link">#</a></h4>
+<p>¿Qué instrucciones nos podemos encontrar dentro de este fichero?</p>
+<ul>
+<li><strong>COPY</strong>: permite copiar un fichero o directorio del host a la imagen.</li>
+<li><strong>ADD</strong>: además de lo que nos permite realizar la instrucción <u>COPY</u>, esta nos <strong>permite pasar una URL</strong> para que descargue el contenido en la ruta que indiquemos dentro de la imagen.</li>
+<li><strong>ENV</strong>: se utiliza para añadir variables de entorno. La variable se establece <strong>sin el signo =</strong>, la variable y el valor se define con un espacio entre ambos. Ejemplo:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">ENV</span> nombre juan
+</code></pre></div>
+
+<ul>
+<li><strong>WORKDIR</strong>: define el directorio de trabajo dentro del contenedor. Si no definimos este parámetro, por defecto nos encontramos en el directorio raíz <strong>/</strong>.</li>
+<li><strong>EXPOSE</strong>: permite exponer puertos. Realmente esta instrucción no realizar ninguna exposición, simplemente informa a la persona que va a utilizar la imagen para crear el contenedor que puertos debe configurar. Estos puertos se expondrán utilizando la opción <strong>-p</strong> del comando <code>docker run</code>.</li>
+<li><strong>LABEL</strong>: hace referencia a una etiqueta, que se utiliza habitualmente para añadir metadatos (información sobre la imagen como versión, creador, etc.).</li>
+<li><strong>USER</strong>: identifica al usuario que ejecuta las instrucciones definidas en el fichero Dockerfile (las instrucciones que se establezcan a partir de la instrucción <strong>user</strong>). Por defecto el usuario que ejecuta las instrucciones es el usuario <strong>root</strong>.</li>
+<li><strong>VOLUME</strong>: permite que los datos que se encuentran en estos "volúmenes" sean persistentes, ya que después de eliminar el contenedor asociado a este volumen los datos no se perderán. </li>
+<li><strong>CMD</strong>: se entiende como la instrucción que mantiene vivo el contenedor.</li>
+</ul>
+<p>A continuación veremos un <strong>Dockerfile</strong> con todas las instrucciones vistas hasta el momento:</p>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span> <span class="s">nginx</span>
+
+<span class="k">LABEL</span> <span class="nv">version</span><span class="o">=</span><span class="m">1</span>.0
+
+<span class="k">RUN</span> useradd prueba
+
+<span class="k">USER</span><span class="s"> prueba</span>
+
+<span class="k">WORKDIR</span><span class="s"> /usr/share/nginx/html</span>
+
+<span class="k">COPY</span> web /usr/share/nginx/html
+
+<span class="k">ENV</span> variable1 tzinm
+
+<span class="k">EXPOSE</span><span class="s"> 90</span>
+
+<span class="k">VOLUME</span><span class="s">  /var/log/nginx</span>
+
+<span class="k">CMD</span> nginx -g <span class="s1">&#39;daemon off;&#39;</span>
+</code></pre></div>
+
+<p>Las instrucciones que definimos dentro de este fichero deben ser lo más estrictas posibles para evitar errores, por ello es importante tener en cuenta lo siguiente:</p>
+<ul>
+<li>Un servicio por contenedor.</li>
+<li>Utilizar la capa <strong>Labels</strong> para añadir metadatos.</li>
+<li>Agrupar los argumentos, evitando crear una capa por cada argumento.</li>
+</ul>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Forma correcta</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="k">RUN</span> <span class="se">\</span>
+  python3 -m pip install telegram --upgrade <span class="o">&amp;&amp;</span> <span class="se">\</span>
+  python3 -m pip install python-telegram-bot --upgrade <span class="o">&amp;&amp;</span> <span class="se">\</span>
+  chown root:root AddToQbitTorrentFolder.py <span class="o">&amp;&amp;</span> <span class="se">\</span>
+  chmod <span class="m">644</span> AddToQbitTorrentFolder.py
+</code></pre></div>
+
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Forma incorrecta</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="k">RUN</span> python3 -m pip install telegram --upgrade
+<span class="k">RUN</span> python3 -m pip install python-telegram-bot --upgrade
+<span class="k">RUN</span> chown root:root AddToQbitTorrentFolder.py
+<span class="k">RUN</span> chmod <span class="m">644</span> AddToQbitTorrentFolder.py
+</code></pre></div>
+
+</div>
+</div>
+<ul>
+<li>Evitar la instalación de paquetes innecesarios, de ese modo crearemos imágenes más ligeras.</li>
+</ul>
+<p>Además del fichero <strong>Dockerfile</strong> hay otro fichero importante llamado <strong>.dockerignore</strong>. El funcionamiento de este es similar al fichero <strong>.gitignore</strong>, es un fichero oculto en el que definimos que contenido del directorio no queremos que sea tenido en cuenta.</p>
+<h4 id="docker-build">Docker Build<a class="headerlink" href="#docker-build" title="Permanent link">#</a></h4>
+<p>Una vez que tenemos nuestro <strong>Dockerfile</strong> terminado debemos ejecutar el comando <code>docker build</code> para crear nuestra imagen.</p>
+<div class="highlight"><pre><span></span><code>docker build -t tzinm/test .
+</code></pre></div>
+
+<p>En el comando ejecutado se ha denominado a la imagen <strong>tzinm/test</strong>, al no haber especificado ningún tag será el tag <strong>latest</strong> el que se haya establecido. Otro dato importante es el <strong>punto</strong> del final, que hace referencia al <a href="https://github.com/docker/docker.github.io/issues/5606#issuecomment-354004184">contexto</a>, es decir el directorio en el cual Docker buscará los ficheros necesarios para crear la imagen.</p>
+<h4 id="multi-stage-builds">Multi-Stage Builds<a class="headerlink" href="#multi-stage-builds" title="Permanent link">#</a></h4>
+<p>Esta nueva funcionalidad que nos ofrece Docker se encuentra disponible a partir de la versión 17.05. Es una utilidad interesante ya que nos permite crear</p>
+<p>En ocasiones, algunas imágenes necesitan cierto contenido que es generado mediante la compilación o ejecución de una serie de instrucciones que hace que el peso de una imagen crezca y su rendimiento no esté lo más optimizado posible. </p>
+<p>Es aquí cuando esta herramienta (<strong>multi-stage builds</strong>) es útil, ya que nos permite en una primera instancia crear una imagen "al vuelo" en la que generaremos esos ficheros mediante las instrucciones que necesitemos. Después esos ficheros serán enviados (veremos luego en un ejemplo como se realiza esto) a la segunda imagen, exclusivamente esos ficheros, desprendiéndonos de la primera imagen y todo lo que ello conlleva.</p>
+<p>Recordamos que para hacer un uso adecuado de Docker es necesario optimizar al máximo las imágenes, es la base de las buenas prácticas.</p>
+<p>A la hora de crear el fichero <strong>Dockerfile</strong> es muy similar al que utilizamos construyendo una única imagen, salvo que en esta ocasión nos encontramos con la construcción de dos imágenes - por lo tanto dos <strong>FROM</strong>- y en la segunda imagen añadimos una capa - <strong>COPY</strong>- con el flag <strong>--from=primar-imagen</strong> que se encargará de pasar el contenido generado en la primera imagen (<strong>primer FROM</strong>). Se puede ver un poco más claro en el siguiente ejemplo.</p>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span> <span class="s">centos</span> <span class="k">as</span> <span class="s">test</span>
+
+<span class="k">RUN</span> fallocate -l 10M /tmp/file1 <span class="o">&amp;&amp;</span> <span class="se">\</span>
+    fallocate -l 40M /tmp/file2
+
+<span class="k">FROM</span> <span class="s">alpine</span>
+
+<span class="k">COPY</span> --from<span class="o">=</span><span class="nb">test</span> /tmp/file1 /tmp/test1
+</code></pre></div>
+
+<h4 id="dangling-images">Dangling images<a class="headerlink" href="#dangling-images" title="Permanent link">#</a></h4>
+<p>Este concepto hace referencia a imágenes huérfanas, que no son más que aquellas imágenes que se encuentran sin <em>referenciar</em>.</p>
+<p>¿Cuando sucede esto?</p>
+<p>Cuando una imagen es construida utilizando el mismo <strong>nombre</strong> y <strong>tag</strong> que otra creada anteriormente. La nueva imagen creada será válida, en cambio las imágenes anteriores que existiesen no serán válidas y pasarán a tener como nombre y tag el valor <strong>\&lt;none></strong>.</p>
+<p>A pesar de que estas imágenes no son válidas, seguirán estando en nuestro sistema y ocupando espacio, por ello es recomendable eliminarlas. El modo más rápido de eliminar todas estas imágenes es mediante el siguiente comando:</p>
+<div class="highlight"><pre><span></span><code>docker rmi <span class="k">$(</span>docker images -f <span class="s2">&quot;dangling=true&quot;</span> -q<span class="k">)</span>
+</code></pre></div>
+
+<p>En el comando anterior hemos utilizado el flag <strong>-f</strong>, que permite el filtrado de las imágenes siguiendo una serie de <a href="https://github.com/moby/moby/blob/10c0af083544460a2ddc2218f37dc24a077f7d90/docs/reference/commandline/images.md#filtering">patrones</a>.</p>
+<h2 id="contenedores">Contenedores<a class="headerlink" href="#contenedores" title="Permanent link">#</a></h2>
+<p>Un contenedor se entiende como una capa adicional que mantiene en ejecución las capas que se han definido en el fichero Dockerfile, por este motivo es posible crear tantos contenedores como se deseen a partir de la misma imagen. A diferencia del resto de capas, esta capa es de lectura y escritura (<strong>rw</strong>), por lo tanto nos permite realizar modificaciones sobre las capas anteriores cuando el contenedor se encuentra en ejecución. </p>
+<p>Todas estas modificaciones son temporales puesto que no sobrescriben el fichero Dockerfile, por lo tanto una vez que eliminemos el contenedor esas modificaciones se perderán (algunas modificaciones pueden ser persistentes mediante el uso de volúmenes que veremos más adelante).</p>
+<h3 id="que-nos-encontramos-dentro-de-un-contenedor">¿Qué nos encontramos dentro de un contenedor?<a class="headerlink" href="#que-nos-encontramos-dentro-de-un-contenedor" title="Permanent link">#</a></h3>
+<ul>
+<li>Imagen</li>
+<li>Volúmenes (se utilizan para mantener persistente cierto contenido)</li>
+<li>Redes (útil para comunicar contenedores entre sí)</li>
+</ul>
+<h3 id="contenedor-vs-maquina-virtual">Contenedor VS Máquina Virtual<a class="headerlink" href="#contenedor-vs-maquina-virtual" title="Permanent link">#</a></h3>
+<p>El contenedor es un proceso aislado más del sistema, por lo tanto compartirá el mismo hardware que esté utilizando el sistema operativo anfitrión, es decir, no necesitamos asignarle recursos específicamente (aunque es posible limitar los recursos utilizados por un contenedor).</p>
+<p>En cambio, cuando creamos una máquina virtual debemos asignarle una serie de recursos, como pueden ser el número de nucleos, la memoria ram o el espacio en disco duro. En este caso obtenemos una máquina completa dentro del propio sistema anfitrión.</p>
+<p>La principal diferencia que nos podemos encontrar es la ligereza, un contenedor está destinado a ser muchísimo más ligero que una máquina virtual, habitualmente un contenedor se utiliza para ejecutar una única aplicación concreta.</p>
+<h3 id="docker-run">Docker run<a class="headerlink" href="#docker-run" title="Permanent link">#</a></h3>
+<p>Este comando se utiliza para iniciar los contenedores. Aunque parece evidente, no puede haber dos contenedores con el mismo nombre, aunque uno de ellos se encuentre parado.</p>
+<div class="highlight"><pre><span></span><code>docker run -d jenkins -p <span class="m">80</span>:8080
+</code></pre></div>
+
+<ul>
+<li>
+<p><strong>-d</strong>: permite correr un contenedor en segundo plano.</p>
+</li>
+<li>
+<p><strong>jenkins</strong>: es el nombre de la imagen utilizada.</p>
+</li>
+<li>
+<p><strong>-p</strong>: permite mapear los puertos. El puerto que se encuentra en el lado izquierdo es el que utilizará el sistema anfitrión, el puerto de la derecha es el interno del contenedor.</p>
+</li>
+<li>
+<p><strong>-e:</strong> asignación de variables de entorno.</p>
+</li>
+</ul>
+<p>En algunas ocasiones si no definimos la capa <strong>CMD</strong> es posible que el contenedor se muera. Si queremos evitar que esto sucede podemos utilizar los parámetros <strong>-i</strong> y <strong>-t</strong> para interactuar con el contenedor.</p>
+<h3 id="limitando-recursos">Limitando recursos<a class="headerlink" href="#limitando-recursos" title="Permanent link">#</a></h3>
+<p>Por defecto Docker utiliza los recursos de la máquina anfitriona sin límite alguno, a pesar de ello los contenedores consumen muy pocos recursos. Podemos limitar tanto el uso de <strong>CPU</strong> como de <strong>RAM</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">#Limitando la memoria RAM</span>
+docker run -d --memory <span class="s2">&quot;100mb&quot;</span> --name recursos-limitados centos 
+</code></pre></div>
+
+<p>Cuando se muestran las estadísticas con el comando <code>docker stats</code> ya no mostrará la RAM limite de nuestra máquina, sino que los que hayamos establecido,  en este caso serán 100MB. Podemos pasar la limitación en <strong>bytes</strong> (b), <strong>kilobytes</strong> (k), <strong>megabytes</strong> (m) o <strong>gigabytes</strong> (g).</p>
+<div class="highlight"><pre><span></span><code><span class="c1">#Limitando el número de cores de la CPU</span>
+docker run -d --cpuset-cpus <span class="m">0</span>-3 --name reclimited2 centos
+</code></pre></div>
+
+<p>Los núcleos (o cores) se pueden definir mediante un rango (como hemos hecho en el ejemplo anterior) o numerándolos y como separación una coma.</p>
+<ul>
+<li><strong>0-2</strong> &rarr; utilizaríamos los núcleos 0, 1 y 2.</li>
+<li><strong>0,2</strong> &rarr; utilizaríamos los núcleos 0 y 2.</li>
+</ul>
+<h3 id="politicas-de-reinicio">Políticas de reinicio<a class="headerlink" href="#politicas-de-reinicio" title="Permanent link">#</a></h3>
+<p>Establecemos que sucede cuando un contenedor se "apaga" de forma inesperada. Disponemos de las siguientes opciones:</p>
+<ul>
+<li><strong>No</strong> (es la política por defecto): el contenedor no se reiniciará automáticamente. Si hacemos una prueba deteniendo cualquier contenedor que tengamos en funcionamiento, veremos que este se detiene y ejecutando el comando <code>docker ps</code> no aparece. </li>
+<li><strong>Always</strong>: con esta opción el contenedor siempre se reiniciará.</li>
+<li><strong>Unless-stopped:</strong> se reiniciará siempre, salvo que sea detenido manualmente.</li>
+<li><strong>On-failure</strong>: se reiniciará en caso de que el contenedor se haya detenido por algún fallo.</li>
+</ul>
+<p>La política de reinicios se establece ejecutando el parámetro <strong>--restart</strong>.</p>
+<div class="highlight"><pre><span></span><code>docker run --restart unless-stopped 
+</code></pre></div>
+
+<h2 id="volumenes">Volúmenes<a class="headerlink" href="#volumenes" title="Permanent link">#</a></h2>
+<p>Como ya sabemos, si eliminamos un contenedor todos sus datos se eliminarán con él. Para evitar esto tenemos los volúmenes que nos permiten hacer persistentes algunos datos de nuestros contenedores. Estos datos se almacenan en un directorio de la máquina anfitriona.</p>
+<p>Docker cuenta con <strong>tres tipos</strong> de volúmenes.</p>
+<h4 id="volumenes-host">Volúmenes Host<a class="headerlink" href="#volumenes-host" title="Permanent link">#</a></h4>
+<p>En este tipo de volúmenes definimos el directorio donde queremos que se almacene la información que debe ser persistente. Es el tipo de volúmenes que más utilizaremos:</p>
+<div class="highlight"><pre><span></span><code>docker run -v /midirectorio:/directorio-docker
+</code></pre></div>
+
+<h4 id="volumenes-anonymous">Volúmenes Anonymous<a class="headerlink" href="#volumenes-anonymous" title="Permanent link">#</a></h4>
+<p>Seguimos haciendo persistentes los datos, pero en este caso no definimos donde queremos que se almacene la información, sino que Docker genera un directorio aleatorio. </p>
+<div class="highlight"><pre><span></span><code>docker run -v /directorio-docker
+</code></pre></div>
+
+<p>Estos directorios se encuentran en una ruta específica bajo el directorio "<strong>raíz</strong>" del servicio Docker. Para conocer dicho directorio es necesario ejecutar la siguiente instrucción:</p>
+<div class="highlight"><pre><span></span><code>docker info <span class="p">|</span> grep -i root
+</code></pre></div>
+
+<p>Entre los diferentes directorio bajo el directorio raíz de Docker, tenemos un directorio denominado volúmenes, que es el directorio donde se almacenaran estos directorios llamados <strong>anonymous</strong>.</p>
+<p>Los directorios <strong>anonymous</strong> también aparecen cuando en un fichero Dockerfile definimos la capa <strong>VOLUME</strong> pero a la hora de ejecutar el contenedor no definimos ningún volumen.</p>
+<p>Esta forma de crear volúmenes no es aconsejable por varios motivos.</p>
+<ol>
+<li>El nombre que otorga al directorio es aleatorio (habitualmente conformado por números), por lo tanto no será sencillo saber que volumen se encuentra asociado a cada contenedor.</li>
+<li>A la hora de eliminar el contenedor si pasamos la opción <strong>-v</strong> eliminaremos también el volumen asociado a este contenedor.</li>
+</ol>
+<h4 id="volumenes-nombrados">Volúmenes Nombrados<a class="headerlink" href="#volumenes-nombrados" title="Permanent link">#</a></h4>
+<p>Es una mezcla de los dos anteriores. El volumen se almacena en el mismo lugar que los volúmenes anonymous, pero en este caso somos nosotros quienes elegimos un nombre para estos volúmenes en vez de ser un nombre aleatorio.</p>
+<p>Los siguientes comandos se utilizan para la gestión de volúmenes:</p>
+<ol><li>Creando un volumen</li>
+
+<div class="highlight"><pre><span></span><code>docker volume create nombre_del_volumen
+</code></pre></div>
+
+<li>Listar los volúmenes</li>
+
+<div class="highlight"><pre><span></span><code>docker volume ls
+</code></pre></div>
+
+<li>Eliminar un volumen</li>
+
+<div class="highlight"><pre><span></span><code>docker volume rm nombre_del_volumen
+</code></pre></div>
+
+<li>Utilizar un volumen nombrado</li>
+
+<div class="highlight"><pre><span></span><code>docker run -v nombre_del_volumen:/dockercontainer
+</code></pre></div>
+
+</ol>
+
+<p>A diferencia de los volúmenes host, donde debemos indicar la ruta completa del directorio, solo es necesario indicar el nombre del volumen que hayamos creado.</p>
+<h3 id="dangling-volumes">Dangling Volumes<a class="headerlink" href="#dangling-volumes" title="Permanent link">#</a></h3>
+<p>Este concepto que hemos visto con los contenedores también existe con los volúmenes. Estos aparecen cuando hemos eliminado un contenedor y el volumen asociado a este (volumen anonymous) no se ha eliminado.</p>
+<p>Para eliminar estos volúmenes podemos hacerlo con la siguiente línea de terminal:</p>
+<div class="highlight"><pre><span></span><code>docker volume ls -f <span class="s2">&quot;dangling=true&quot;</span> -q <span class="p">|</span> xargs docker volume rm
+</code></pre></div>
+
+<ul>
+<li><strong>-f / --filtering</strong>: flag utilizado para filtrar los volúmenes.</li>
+<li><strong>dangling</strong>: es un filtro booleano que únicamente permite <strong>true</strong> o <strong>false</strong>.</li>
+<li>**-q **(quiet): imprime el ID que identifica a cada volumen.</li>
+</ul>
+<p>Con <a href="https://www.patapalo.net/blog/view/7/ejemplos-de-xargs-en-sistemas-linux-unix">xargs</a> pasamos el resultado a un segundo comando, de ese modo conseguimos eliminar con una única línea todos los volúmenes.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Los volúmenes se pueden compartir entre varios contenedores, simplemente es indicar el volumen en el parámetro correspondiente cuando creemos los contenedores. Puede ser útil cuando necesitamos que dos contenedores accedan a la información que se encuentra en un directorio de nuestra máquina.</p>
+</div>
+<h2 id="redes">Redes<a class="headerlink" href="#redes" title="Permanent link">#</a></h2>
+<p>Cuando levantamos por primera vez el servicio <strong>Docker</strong> se crea una interfaz virtual llamada <strong>docker0</strong> a la cual se le asigna una dirección ip en una subred diferente a la de nuestra red local. Cuando creamos un contenedor nuevo sin pasarle el parámetro referente a la <strong>red</strong>, este le asigna una dirección ip correspondiente al rango que nos proporciona la interfaz virtual <strong>docker0</strong>.</p>
+<p>Algunos de los comandos referentes a la red de Docker:</p>
+<ol><li>Ver la redes disponibles</li>
+
+<div class="highlight"><pre><span></span><code>docker network ls
+</code></pre></div>
+
+<li>Obtener información sobre una red</li>
+
+<div class="highlight"><pre><span></span><code>docker network inspect nombre_de_red
+</code></pre></div>
+
+</ol>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Los contenedores que se encuentran en la misma red pueden hacerse ping entre ellos.</p>
+</div>
+<h3 id="creacion-de-redes">Creación de redes<a class="headerlink" href="#creacion-de-redes" title="Permanent link">#</a></h3>
+<p>Cuando creamos una red nueva, esta utilizará los drivers <strong>bridge</strong> (esto se puede cambiar pasando el parámetro <code>--driver string</code> cuando creamos la nueva red). El comando para la creación de nuevas redes es el siguiente:</p>
+<div class="highlight"><pre><span></span><code>docker network create nombre_de_red
+</code></pre></div>
+
+<p>Docker nos permite especificar ciertas configuraciones a la hora de crear la red como puede ser la dirección de red o la puerta de enlace. Para ver que opciones tenemos podemos ejecutar <code>docker network create --help</code>.</p>
+<div class="highlight"><pre><span></span><code>docker network create --driver bridge --subnet <span class="m">172</span>.16.16.0/24 --gateway <span class="m">172</span>.16.16.254 red-prueba
+</code></pre></div>
+
+<p><img alt="Docker Network Inspect" src="../../Imagenes/Docker/docker-network-inspect.png" title="Docker Network Inspect" /></p>
+<p>También existe la posibilidad de establecer una dirección ip específica a un contenedor, para ello se utiliza el flag <code>--ip</code>.</p>
+<div class="highlight"><pre><span></span><code>docker run --network nombre_red --ip <span class="m">192</span>.168.50.2 -dti --name nombre_contenedor ubuntu
+</code></pre></div>
+
+<h3 id="conectando-un-contenedor-a-una-red-diferente">Conectando un contenedor a una red diferente<a class="headerlink" href="#conectando-un-contenedor-a-una-red-diferente" title="Permanent link">#</a></h3>
+<p>Sabemos que Docker asigna como red por defecto <strong>bridge</strong>, por lo que si queremos elegir otra red deberemos hacerlo manualmente. La instrucción necesaria para elegir una red diferente a la red por defecto es la siguiente:</p>
+<div class="highlight"><pre><span></span><code>docker run --network nombre_de_red -dti --name prueba-red ubuntu
+</code></pre></div>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Podemos ejecutar <code>docker inspecto prueba-red</code> para ver las propiedades del contenedor, en las que aparecerá la sección NetworkSetting y se podrá ver la red asignada a este contenedor.</p>
+</div>
+<h3 id="conectar-contenedores-a-la-misma-red">Conectar contenedores a la misma red<a class="headerlink" href="#conectar-contenedores-a-la-misma-red" title="Permanent link">#</a></h3>
+<p>En la red por defecto de Docker (<strong>red bridge</strong>) no podemos reconocer a los contenedores por su <strong>hostname</strong>. En cambio, cuando creamos una red (aunque utilice el driver bridge) es posible la comunicación entre contenedores a través de su hostname, esto se debe a que son redes definidas como "<strong>user define network</strong>".</p>
+<p>Para realizar una prueba de comunicación entre dos contenedores podemos utilizar el comando <code>ping</code>. Podemos hacer la prueba mediante la dirección ip o mediante el nombre del contenedor.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">#Dirección ip</span>
+docker <span class="nb">exec</span> nombre_contenedor bash -c <span class="s2">&quot;ping -c 3 ip_contenedor2&quot;</span>
+
+<span class="c1">#Hostname</span>
+docker <span class="nb">exec</span> nombre_contenedor bash -c <span class="s2">&quot;ping -c 3 nombre_contenedor2&quot;</span>
+</code></pre></div>
+
+<p><img alt="Docker Network Ping" src="../../Imagenes/Docker/docker-network-ping.png" title="Ping entre contenedores docker" /></p>
+<h3 id="contenedores-en-mas-de-una-red">Contenedores en más de una red<a class="headerlink" href="#contenedores-en-mas-de-una-red" title="Permanent link">#</a></h3>
+<p>Los contenedores ya existentes pueden tener configurado más de una red diferente.</p>
+<div class="highlight"><pre><span></span><code>docker network connect nombre_red nombre_contenedor
+</code></pre></div>
+
+<p>El comando <code>docker inspect</code> nos permite inspeccionar un contenedor, lo cual permite verificar las diferentes redes configuradas en dicho contenedor, de ese modo podríamos verificar si se ha añadido la nueva red.</p>
+<p>Al igual que se puede configurar varias redes en un contenedor, también podemos eliminar varias redes de los contenedores. </p>
+<div class="highlight"><pre><span></span><code>docker network disconnect nombre_red nombre_contenedor
+</code></pre></div>
+
+<h3 id="eliminar-redes">Eliminar redes<a class="headerlink" href="#eliminar-redes" title="Permanent link">#</a></h3>
+<p>Las redes creadas por un usuario se pueden eliminar, para ello es necesario que ningún contenedor se encuentre asociado a dicha red.</p>
+<div class="highlight"><pre><span></span><code>docker network rm nombre_red
+</code></pre></div>
+
+<h3 id="tipos-de-drivers-de-red">Tipos de drivers de red<a class="headerlink" href="#tipos-de-drivers-de-red" title="Permanent link">#</a></h3>
+<h4 id="bridge">Bridge<a class="headerlink" href="#bridge" title="Permanent link">#</a></h4>
+<p>En Docker es el driver de red por defecto, sino se específica uno diferente es el driver utilizado por defecto a la hora de crear nuevas redes. </p>
+<h4 id="host">Host<a class="headerlink" href="#host" title="Permanent link">#</a></h4>
+<p>Este tipo de driver de red elimina el aislamiento entre el contenedor y la máquina anfitriona, por lo tanto utiliza la red que utiliza la máquina anfitriona. Es decir, estos contenedores podrán recibir una dirección ip de forma dinámica por parte del servidor DHCP que tengamos configurado en nuestra red local.</p>
+<h4 id="overlay">Overlay<a class="headerlink" href="#overlay" title="Permanent link">#</a></h4>
+<p>Permite la comunicación entre diferentes servidores Docker (docker daemons), esto permite que diferentes servicios puedan comunicarse entre si.</p>
+<h4 id="macvlan">Macvlan<a class="headerlink" href="#macvlan" title="Permanent link">#</a></h4>
+<p>Permite asignar una dirección MAC a un contenedor, lo cual simula disponer de una tarjeta de red en dicho contenedor.</p>
+<h4 id="none">None<a class="headerlink" href="#none" title="Permanent link">#</a></h4>
+<p>Este tipo de driver permite deshabilitar la red en los contenedores. </p>
+<h2 id="docker-compose">Docker Compose<a class="headerlink" href="#docker-compose" title="Permanent link">#</a></h2>
+<p>Es una herramienta que nos ayuda a orquestar contenedores en Docker, gestionar los diferentes contenedores de los que depende una aplicación. Existen aplicaciones que para su correcto funcionamiento dependen de varios servicios, para seguir con la simplicidad de "<strong>un servicio = un contenedor</strong>", Docker Compose nos permitirá administrar los diferentes contenedores de forma grupal. </p>
+<p>Docker Compose trabaja con ficheros de tipo <strong>yaml</strong>, en los que se definen los contenedores, volúmenes, redes, etc. Después de completar el fichero, <code>docker-compose</code> como comando se encarga de la lectura del fichero y lanzar todos los contenedores definidos en dichero fichero.</p>
+<p>Durante la instalación de Docker-CE esta herramienta no se instala, por lo que será necesaria la instalación de forma independiente. En la <a href="https://docs.docker.com/compose/install/">documentación</a> oficial se encuentran diferentes guías para la instalación en los diferentes Sistemas Operativos.</p>
+<p>En la máquina actual, en la que estamos trabajando bajo Linux, la instalación se haría del siguiente modo:</p>
+<ol><li>Descargamos Docker-Compose.</li>
+
+<div class="highlight"><pre><span></span><code>sudo curl -L <span class="s2">&quot;https://github.com/docker/compose/releases/download/1.24.1/docker-compose-</span><span class="k">$(</span>uname -s<span class="k">)</span><span class="s2">-</span><span class="k">$(</span>uname -m<span class="k">)</span><span class="s2">&quot;</span> -o /usr/local/bin/docker-compose
+</code></pre></div>
+
+<li>Aplicar permisos de ejecución al ejecutable que hemos descargado.</li>
+
+<div class="highlight"><pre><span></span><code>sudo chmod +x /usr/local/bin/docker-compose
+</code></pre></div>
+
+</ol>
+
+<h3 id="comenzando-con-docker-compose">Comenzando con Docker Compose<a class="headerlink" href="#comenzando-con-docker-compose" title="Permanent link">#</a></h3>
+<p>El nombre del fichero que debemos utilizar es <strong>docker-compose.yml</strong>, donde definiremos los diferentes contenedores.</p>
+<p>Este fichero cuenta con cuatro grandes partes:</p>
+<ol><li><b>Version</b> (obligatorio): para saber que número de versión (Docker-Compose) debemos establecer, buscamos en la documentación cual es la última versión, suele ser la que se recomienda utilizar.</li>
+
+<li><b>Services</b> (obligatorio): los servicios hacen referencia a los contenedores. En primera instancia definimos los nombres de cada servicio (podemos elegir el que queramos), y debajo de ellos irán los parámetros que hacen referencia al propio contenedor, como el nombre del contenedor, la imagen a la que hace referencia, puertos, variables de entorno, etc.</li>
+
+<li><b>Volumes</b> (opcional): 
+
+- Volúmenes nombrados: funcionan del mismo modo que ejecutando <code>docker run</code>. Lo que hacemos es definir en primer lugar el volumen que crearíamos con la instrucción <code>docker volume create</code> en "volumes" con el nombre que queramos. A continuación lo definimos dentro del servicio.
+
+<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span> <span class="s">&#39;3&#39;</span>
+<span class="nt">services</span><span class="p">:</span>
+  <span class="nt">web</span><span class="p">:</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx</span>
+    <span class="nt">container_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx-prueba</span>
+    <span class="nt">volumes</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;html:/usr/share/nginx/html&quot;</span>
+<span class="nt">volumes</span><span class="p">:</span>
+  <span class="nt">html</span><span class="p">:</span>
+</code></pre></div>
+
+- Volúmenes host: no necesitamos la parte <b>volumes</b> dentro del fichero <b>docker-compose.yml</b> sino que directamente en el contenedorlo podemos parametrizar.
+
+<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span> <span class="s">&#39;3&#39;</span>
+<span class="nt">services</span><span class="p">:</span>
+  <span class="nt">web</span><span class="p">:</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx</span>
+    <span class="nt">container_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx-prueba</span>
+    <span class="nt">volumes</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;/home/miusuario/html:/usr/share/nginx/html&quot;</span>
+</code></pre></div>
+
+</li><li><b>Networks</b> (opcional):
+
+- Red Host: <b><a href="https://stackoverflow.com/questions/47074457/how-to-specify-docker-build-network-host-mode-in-docker-compose-at-the-time/47545276#47545276">es importante establecer la versión 3.4 para que funcione correctamente</a></b>. Para que funcione es necesario añadir <b>build</b>, y además añadir el <a href="https://docs.docker.com/compose/compose-file/#build">contexto</a>, que hace referencia a un directorio que contenga un Dockerfile o una url a un repositorio git. Si establecemos la ruta relativa hace referencia a la ubicación del archivo de composición. 
+
+<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span> <span class="s">&#39;3.4&#39;</span>
+<span class="nt">services</span><span class="p">:</span>
+  <span class="nt">web</span><span class="p">:</span>
+    <span class="nt">build</span><span class="p">:</span>
+      <span class="nt">context</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">.</span>
+      <span class="nt">network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">host</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx</span>
+    <span class="nt">container_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx-prueba</span>
+    <span class="nt">ports</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;8181:80&quot;</span>
+</code></pre></div>
+
+- Creación de una nueva red con subnet. <b>Aún no se permite establecer gateway</b>.
+
+<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span> <span class="s">&#39;3&#39;</span>
+<span class="nt">services</span><span class="p">:</span>
+  <span class="nt">web</span><span class="p">:</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx</span>
+    <span class="nt">container_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx-prueba</span>
+     <span class="l l-Scalar l-Scalar-Plain">ports</span><span class="p p-Indicator">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;8181:80&quot;</span>
+    <span class="nt">networks</span><span class="p">:</span>
+      <span class="nt">red-prueba</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">ipv4_address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.50.10</span>
+<span class="nt">networks</span><span class="p">:</span>
+  <span class="nt">red-prueba</span><span class="p">:</span>
+    <span class="nt">ipam</span><span class="p">:</span>
+      <span class="nt">driver</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
+      <span class="nt">config</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">subnet</span><span class="p">:</span> <span class="s">&quot;192.168.50.0/24&quot;</span>
+</code></pre></div>
+
+En cuanto a las redes, cuando ejecutamos el comando <code>docker-compose up -d</code> se genera una red específica para <b>docker-compose</b>. Si no definimos una red, la red utilizada será la red por defecto (docker-compose_default). Cuando se crea la red, el nombre que es otorgado "<b>directorioactual_nombredelared</b>". Es posible modificar la parte del nombre que hace referencia al "directorioactual", pasando el parámetro <code>-p</code>.
+
+Por lo tanto si nuestro directorio actual se denomina <b>docker-compose</b> y queremos que el prefijo sea por ejemplo </b>dcprueba</b> ejecutaríamos el siguiente comando:
+
+<div class="highlight"><pre><span></span><code><span class="c1">#Modificar el nombre de red a &quot;dcprueba_default&quot;</span>
+
+docker-compose -p dcprueba up -d
+</code></pre></div>
+
+</li></ol>
+
+<p>Por otro lado, tenemos dos partes importantes que se utilizan a la hora de crear contenedores.</p>
+<ul>
+<li><strong>Variables de entorno:</strong> estas se pueden definir de dos modos.</li>
+</ul>
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Fichero docker-compose.yml</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="nt">environment</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="s">&quot;VARIABLES1=docker&quot;</span>
+</code></pre></div>
+
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Fichero con extensión .env.</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="nt">environment</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">variables.env</span>
+</code></pre></div>
+
+</div>
+</div>
+<ul>
+<li><strong>Command:</strong>  se utiliza para establecer un CMD al contenedor.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nt">commmand</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mkdir /bin/bash</span>
+</code></pre></div>
+
+<p>El comando <code>docker-compose</code> se encarga de realizar un proceso similar que el comando <code>docker run</code>, pero en este caso los diferentes parámetros se encuentran definidos en un fichero. Por lo tanto, las <a href="#Política de reinicio">políticas de reinicio</a> o la <a href="limitando recursos">limitación de recursos</a> también se pueden definir.</p>
+<ul>
+<li>Políticas de reinicio:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1">#Reinicio siempre</span>
+<span class="nt">restart</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">always</span>
+
+<span class="c1">#Reinicio hasta que lo detengamos de forma manual</span>
+<span class="nt">restart</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">unless-stopped</span>
+
+<span class="c1">#Únicamente se reinicia el contenedor en caso de que haya habido un fallo</span>
+<span class="nt">restart</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">on-failure</span>
+</code></pre></div>
+
+<ul>
+<li>Limitar recursos:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1">#Limitar memoria</span>
+<span class="nt">mem_limit</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20m</span>
+
+<span class="c1">#Cpu</span>
+<span class="nt">cpuset</span><span class="p">:</span> <span class="s">&quot;0&quot;</span>
+</code></pre></div>
+
+<p>Otras de las directivas relevantes de este fichero es <strong>depends_on</strong>, la cual hace referencia a las dependencias que tiene se contenedor respecto a los que se incluyan en esta directiva.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span> <span class="s">&#39;3&#39;</span>
+<span class="nt">services</span><span class="p">:</span>
+  <span class="nt">web</span><span class="p">:</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx</span>
+    <span class="nt">container_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx-prueba</span>
+    <span class="nt">depends_on</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">db</span>
+  <span class="nt">db</span><span class="p">:</span>
+  <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres</span>
+  <span class="nt">container_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx-database</span>
+</code></pre></div>
+
+<p>El último paso será conocer como podemos eliminar un contenedor creado con la herramienta Docker-Compose. Para ello debemos ejecutar el siguiente comando, situados en el directorio donde se encuentra el fichero <strong>yaml</strong>.</p>
+<div class="highlight"><pre><span></span><code>docker-compose down
+</code></pre></div>
+
+<p>El comando anterior sigue el siguiente proceso:</p>
+<ol>
+<li>Detiene el contenedor.</li>
+<li>Elimina el contenedor.</li>
+<li>Elimina la red que ha creado por defecto.</li>
+</ol>
+<h3 id="docker-compose-build">Docker-compose build<a class="headerlink" href="#docker-compose-build" title="Permanent link">#</a></h3>
+<p>Ya conocemos el comando <code>docker build</code>, es el encargado de crear imágenes. El comando <a href="https://stackoverflow.com/a/39988980/12868523"><code>docker-compose build</code></a> tiene un funcionamiento similar, se encarga de generar una imagen a partir de la definición de <strong>build</strong> en el fichero <strong>yaml</strong>. Esta imagen será utilizada como imagen base en la creación del contenedor.</p>
+<p>Para que se construya una imagen, sabemos que necesitamos un fichero <strong>Dockerfile</strong>, en el cual se encuentran las capas para la construcción de una imagen. En la sentencia <strong>build</strong> nos encontramos con dos parámetros importantes.</p>
+<ul>
+<li><strong>Context:</strong> se indica la ruta donde se encuentra el <strong>Dockerfile</strong> que utilizaremos para crear la imagen. Si se encuentra en el mismo directorio se utilizará el punto (<strong>.</strong>).</li>
+<li><strong>Dockerfile:</strong> el nombre del fichero si este es diferente al nombre por defecto (Dockerfile).</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span> <span class="s">&#39;3&#39;</span>
+<span class="nt">services</span><span class="p">:</span>
+  <span class="nt">web</span><span class="p">:</span>
+    <span class="nt">container_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">web</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">web-test</span>
+    <span class="nt">build</span><span class="p">:</span>
+      <span class="nt">context</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">.</span>
+      <span class="nt">dockerfile</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Dockerfile1</span>
+</code></pre></div>
+
+<p><em>*Si el nombre que hace referencia al Dockerfile no se ha modificado, podemos obviar estos dos parámetros.</em></p>
+<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span> <span class="s">&#39;3&#39;</span>
+<span class="nt">services</span><span class="p">:</span>
+  <span class="nt">web</span><span class="p">:</span>
+    <span class="nt">container_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">web</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">web-test</span>
+    <span class="nt">build</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">.</span>
+</code></pre></div>
+
+<h2 id="seguridad">Seguridad<a class="headerlink" href="#seguridad" title="Permanent link">#</a></h2>
+<p>Este apartado lo he denominado "seguridad" porque creo que es donde mejor encajala gestión de los usuarios en Docker. Para profundizar en el tema de seguridad es conveniente revisar la <a href="https://docs.docker.com/engine/security/security/">documentación oficial</a>.</p>
+<p>Simplificando mucho, sabemos que los contenedores de Docker son procesos para el sistema anfitrión, por lo tanto el kernel del sistema es compartido entre todos los contenedores y el propio sistema. Es importante tener en cuenta esto ya que el kernel de Linux es el encargado de gestionar el <strong>uid</strong> y el <strong>gid</strong> de los diferentes usuarios, por lo tanto, estos serán compartidos con los contenedores de Docker.</p>
+<p>Cuando ejecutamos un contenedor, si no se especifica un usuario en la creación del propio contenedor o en la imagen base del mismo, el <strong>uid</strong> y <strong>gid</strong> por defecto será <strong>0</strong>. Este <strong>id</strong> corresponde al usuario <strong>root</strong>, el usuario administrador de nuestro sistema.</p>
+<p>Una buena práctica para controlar este comportamiento es contar con un usuario específico para Docker, al que se le otorgarán los permisos exclusivamente necesarios para que el contenedor que hayamos creado pueda únicamente realizar la tarea para la que se ha creado.</p>
+<p>Después de que hayamos creado el usuario que utilizaremos en los contenedores Docker, podemos obtener los ids que necestiamos (uid y gid) ejecutando el siguiente comando:</p>
+<div class="highlight"><pre><span></span><code>id usuario-docker
+</code></pre></div>
+
+<p>Para indicar al contenedor que usuario será el que ejecute el <strong>CMD</strong>, se lo indicaremos con el flag <code>-u</code>.</p>
+<div class="highlight"><pre><span></span><code>docker run -u<span class="o">=</span><span class="s2">&quot;uid:gid&quot;</span>
+</code></pre></div>
+
+<p>Para verlo de una forma más clara, lo trataremos con un <u>ejemplo</u>.</p>
+<p>Imaginemos que queremos montar una biblioteca multimedia al estilo "Netflix" a partir de las películas y series digitales que tenemos en nuestros equipos. Hay diversas herramientas que nos facilitan esto, como por ejemplo <strong>Plex</strong>, que es una de las más conocidas. </p>
+<p>Esta biblioteca podemos ponerla en marcha a través de un contenedor Docker, pero para que funcione correctamente este contenedor necesita acceso a las carpetas donde se encuentra todo nuestro contenido multimedia. Bien, si el usuario del contenedor no es el adecuado el contenedor no será capaz de leer los directorios donde se encuentra todo el contenido multimedia, y por lo tanto no podrá realizar su trabajo y no tendremos nuestra ansiada biblioteca multimedia.</p>
+<p>Siguiendo con la premisa de un usuario exclusivo para Docker, este usuario debería tener acceso a los directorios donde se encuentra todo el contenido multimedia y a su vez, ser el usuario que hemos pasado por parámetros al contenedor de Plex.</p>
+<h2 id="otros-conceptos">Otros conceptos<a class="headerlink" href="#otros-conceptos" title="Permanent link">#</a></h2>
+<h3 id="docker-registry">Docker Registry<a class="headerlink" href="#docker-registry" title="Permanent link">#</a></h3>
+<p>Es un servicio donde se alojan las imágenes que utilizará Docker. A este servicio se realizan peticiones mediante los comandos <code>docker pull</code> (descargar imágenes) y <code>docker push</code> (subir imágenes).</p>
+<p>El registry que utilizamos habitualmente es el propio de Docker, conocido como <a href="https://hub.docker.com/">Docker Hub</a>, del que nos descargamos las imágenes desarrolladas por la comunidad. Existe la posibilidad de mantener un registry local, podemos seguir la <a href="https://docs.docker.com/registry/.">documentación oficial</a> para tenerlo en funcionamiento.</p>
+<p>Los siguientes comandos muestran un ejemplo utilizando un registry local.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">#Renombramos la imagen para que coincida con el nombre del registry, como lo haríamos en docker hub.</span>
+docker tag hello-world:lastest localhost:5000/hello-world
+
+<span class="c1">#Subimos la imagen.</span>
+docker push localhost:5000/hello-world
+
+<span class="c1">#Descargar la imagen.</span>
+docker pull localhost:5000/hellos-world
+</code></pre></div>
+
+<h2 id="comandos">Comandos<a class="headerlink" href="#comandos" title="Permanent link">#</a></h2>
+<h3 id="comandos-mas-utilizados">Comandos más utilizados<a class="headerlink" href="#comandos-mas-utilizados" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Comando</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>docker images</td>
+<td>lista las imágenes que se encuentran descargadas</td>
+</tr>
+<tr>
+<td>docker build</td>
+<td>construir una imagen a partir de un fichero <strong>Dockerfile</strong></td>
+</tr>
+<tr>
+<td>docker history</td>
+<td>listar las capas generadas en una imagen concreta</td>
+</tr>
+<tr>
+<td>docker run</td>
+<td>crear un contenedor a partir de una imagen</td>
+</tr>
+<tr>
+<td>docker rm</td>
+<td>eliminar un contenedor</td>
+</tr>
+<tr>
+<td>docker rmi</td>
+<td>eliminar una o más imágenes</td>
+</tr>
+<tr>
+<td>docker ps</td>
+<td>listar los contenedores</td>
+</tr>
+<tr>
+<td>docker ps -a</td>
+<td>listar todos los contenedores</td>
+</tr>
+<tr>
+<td>docker rename</td>
+<td>cambiar el nombre de un contenedor (renombrar)</td>
+</tr>
+<tr>
+<td>docker stop</td>
+<td>detener un contenedor (se puede utilizar el id o el nombre del contenedor)</td>
+</tr>
+<tr>
+<td>docker start</td>
+<td>iniciar un contenedor (se puede utilizar el id o el nombre del contenedor)</td>
+</tr>
+<tr>
+<td>docker restart</td>
+<td>reiniciar un contenedor (se puede utilizar el id o el nombre del contenedor)</td>
+</tr>
+<tr>
+<td>docker logs</td>
+<td>para mostrar los logs de un contenedor. <strong>Con el parámetro "-f" se actualizan los logs en tiempo real</strong></td>
+</tr>
+<tr>
+<td>docker inspect</td>
+<td>muestra información detallada de como ha sido construido un contenedor</td>
+</tr>
+<tr>
+<td>docker stats</td>
+<td>pasando el contenedor a este comando nos muestra cuantos recursos consume dicho contenedor</td>
+</tr>
+<tr>
+<td>docker system df --verbose</td>
+<td>muestra información detallada sobre el tamaño de todo el contenido de docker</td>
+</tr>
+<tr>
+<td>docker volume ls</td>
+<td>lista los volúmenes de Docker. Únicamente lista los que se encuentran bajo el directorio root de Docker</td>
+</tr>
+<tr>
+<td>docker exec</td>
+<td>permite ejecutar comandos dentro de un contenedor que esté activo</td>
+</tr>
+<tr>
+<td>docker history imagen</td>
+<td>muestra como ha sido creado una imagen</td>
+</tr>
+<tr>
+<td>docker cp</td>
+<td>copiar archivos entre la máquina anfitrión y el contenedor, y viceversa</td>
+</tr>
+<tr>
+<td>docker prune</td>
+<td>elimina todos los contenedores que se encuentran parados. Antes de eliminarlos se muestra un <strong>aviso</strong>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="otros-comandos">Otros comandos<a class="headerlink" href="#otros-comandos" title="Permanent link">#</a></h3>
+<ol><li><b>Docker build</b></li>
+
+<div class="highlight"><pre><span></span><code><span class="c1">#Construir una imagen con un nombre de Dockerfile diferente al utilizado por defecto. Para ello se utiliza el parámetro &quot;-f&quot;.</span>
+
+docker build -t <span class="nb">test</span> -f pruebadockerfile .
+</code></pre></div>
+
+<li><b>Docker exec</b></li>
+
+<div class="highlight"><pre><span></span><code><span class="c1">#Entrar en la terminal de un contenedor.</span>
+
+docker <span class="nb">exec</span> -ti nombre_del_contenedor bash
+
+<span class="c1">#exec: ejecutar</span>
+<span class="c1">#-t: terminal</span>
+<span class="c1">#-i: interactivo</span>
+<span class="c1">#bash: la terminal seleccionada</span>
+<span class="c1">#Se puede establecer el parámetro &quot;-u&quot; para seleccionar un usuario específico.</span>
+</code></pre></div>
+
+<li><b>Docker ps</b></li>
+
+<div class="highlight"><pre><span></span><code><span class="c1">#Eliminar todos los contenedores a través de sus IDs.</span>
+
+docker ps -q <span class="p">|</span> xargs docker rm -f
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="c1">#Eliminar todos los contenedores con estados &quot;exited&quot;.</span>
+
+docker ps -a <span class="p">|</span> grep Exit <span class="p">|</span> cut -d <span class="s1">&#39; &#39;</span> -f <span class="m">1</span> <span class="p">|</span> xargs sudo docker rm
+</code></pre></div>
+
+<li><b>Docker cp</b></li>
+
+<div class="highlight"><pre><span></span><code><span class="c1">#Copiar ficheros de mi máquina a un contenedor y viceversa.</span>
+
+docker cp mimaquina.txt test:/home
+
+docker cp test:/home/mimaquina.txt .
+</code></pre></div>
+
+<li><b>Docker run</b></li>
+
+<div class="highlight"><pre><span></span><code><span class="c1">#Creación de un contenedor con el parámetro --rm para que se autoelimine una vez que haya salido de la sesión del contenedor.</span>
+
+docker run --rm -ti -name <span class="nb">test</span> ubuntu:latest bash
+</code></pre></div>
+
+<li><b>Docker rmi</b></li>
+
+<div class="highlight"><pre><span></span><code><span class="c1">#Eliminar imagenes huérfanas</span>
+docker rmi <span class="k">$(</span>docker images -f <span class="s2">&quot;dangling=true&quot;</span> -q<span class="k">)</span>
+
+<span class="c1">#Eliminar imagenes por fecha. Since (imagenes creadas posteriormente a la imagen pasada en el filtro), Before (imagenes creadas anteriormente a la imagen pasada en el filtro).</span>
+docker rmi <span class="k">$(</span>docker images -f <span class="nv">since</span><span class="o">=</span><span class="s2">&quot;images&quot;</span> -q<span class="k">)</span>
+</code></pre></div>
+
+<li><b>Docker commit</b></li>
+
+<div class="highlight"><pre><span></span><code><span class="c1">#Crear una imagen a partir de un contenedor</span>
+docker commit nombre-contenedor imagen-nueva
+</code></pre></div>
+
+<li><b>Docker history</b></li>
+
+<div class="highlight"><pre><span></span><code><span class="c1">#Visualizar el CMD del contenedor</span>
+docker <span class="nb">history</span> -h nombre-contenedor
+</code></pre></div>
+
+</ol>
+
+<h2 id="fuentes">Fuentes<a class="headerlink" href="#fuentes" title="Permanent link">#</a></h2>
+<h3 id="docker-bases">Docker bases<a class="headerlink" href="#docker-bases" title="Permanent link">#</a></h3>
+<p><a href="https://www.udemy.com/course/docker-de-principiante-a-experto/">Docker, de principiante a experto</a></p>
+<p><a href="https://docker-curriculum.com/">Docker for beginners</a></p>
+<p><a href="https://www.atareao.es/tutorial/docker/">Capítulos Docker atareao.es</a></p>
+<p><a href="https://dockertips.com">Docker Tips</a></p>
+<p><a href="https://code.tutsplus.com/es/tutorials/docker-from-the-ground-up-understanding-images--cms-28165">Docker desde las bases: Comprendiendo imagenes</a></p>
+<p><a href="https://github.com/brunocascio/docker-espanol">Docker español GitHub</a></p>
+<h3 id="docker-en-profundidad">Docker en profundidad<a class="headerlink" href="#docker-en-profundidad" title="Permanent link">#</a></h3>
+<p><a href="https://goinbigdata.com/docker-run-vs-cmd-vs-entrypoint/">Docker CMD vs ENTRYPOINT</a></p>
+<p><a href="https://medium.com/@mccode/understanding-how-uid-and-gid-work-in-docker-containers-c37a01d01cf">Understanding how uid and gid work in Docker containers</a></p>
+<p><a href="https://medium.com/@serrodcal/buenas-pr%C3%A1cticas-construyendo-im%C3%A1genes-docker-8a4f14f7ad1d">Buenas prácticas construyendo imágenes Docker</a></p>
+<p><a href="https://www.albertcoronado.com/2017/05/15/truco-docker-eliminar-volumnenes-huerfanos/">Eliminar volúmenes huérfanos</a></p>
+<p><a href="https://stackoverflow.com/a/44796846/12868523">Dopcker Hub Automated Build Tagging</a></p>
+<p><a href="https://medium.com/@mccode/using-semantic-versioning-for-docker-image-tags-dfde8be06699">Using Semver for Docker Image Tags</a></p>
+<p><a href="https://ugeek.github.io/blog/post/2019-09-23-comando-para-saber-los-dockers-corriendo-y-sus-puertos.html">Comando para saber los dockers corriendo y sus puertos</a></p>
+                
+                  
+                    
+
+<hr>
+<div class="md-source-date">
+  <small>
+    
+      Última actualización: 30 de abril de 2020
+    
+  </small>
+</div>
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Pie">
+        
+          <a href="../.." title="Home" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Anterior
+                </span>
+                Home
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../Contenedores/" title="Contenedores de ejemplo" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Siguiente
+                </span>
+                Contenedores de ejemplo
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2020 Tzinm
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+      <a href="https://github.com/tzinm" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+      </a>
+    
+      
+      
+      <a href="https://hub.docker.com/u/tzinm" target="_blank" rel="noopener" title="hub.docker.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+      </a>
+    
+      
+      
+      <a href="https://t.me/tzinm" target="_blank" rel="noopener" title="t.me" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9l-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239.1-92.2c11.1-4 20.8 2.7 17.2 19.5z"/></svg>
+      </a>
+    
+      
+      
+      <a href="https://twitter.com/tzinm1" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.83fe6e3c.min.js"></script>
+      <script src="../../assets/javascripts/bundle.7e1cb91c.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copiar al portapapeles", "clipboard.copied": "Copiado al portapapeles", "search.config.lang": "es", "search.config.pipeline": "", "search.config.separator": "", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: ["tabs", "instant"],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.37585f48.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
