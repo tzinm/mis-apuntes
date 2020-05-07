@@ -10,3 +10,4 @@ Cualquier sugerencia es bienvenida :smiley:, en la parte derecha de las notas de
 
 [MacOS](./MacOS/personalizando-terminal.md)
 
+[Router Asus](./Asus/Custom-DDNS.md)

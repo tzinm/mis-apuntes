@@ -73,3 +73,5 @@ nav:
      - Rclone in OMV: ./OpenMediaVault/Rclone.md
  - MacOS:
      - Terminal: ./MacOS/personalizando-terminal.md
+ - Router Asus:
+     - Configurando DuckDNS: ./Asus/Custom-DDNS.md
