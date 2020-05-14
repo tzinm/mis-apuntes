@@ -1,4 +1,4 @@
-## ¿Qué es Docker? 
+## ¿Qué es Docker?
 
 Es una herramienta que permite desplegar aplicaciones en contenedores de forma rápida y portable. Los términos que más escucharemos cuando hablamos de Docker serán "**contenedores**" e "**imágenes**".
 
@@ -12,18 +12,22 @@ Docker se encuentra disponible para las principales plataformas, como Windows, L
 
 Cuando interactuamos con contenedores o imágenes, lo hacemos a través del cliente de Docker, con lo cual nos interesa saber que es lo que podemos gestionar.
 
-- [Imágenes](#¿Qué es una imagen?)
-- [Contenedores](#¿Qué es un contenedor?)
-- [Volúmenes](#¿Qué es un volumen)
-- [Redes](#Redes)
-- [Docker-Compose](#Docker-Compose)
-- [Seguridad](#Seguridad)
-- [Comandos](#Comandos)
-- [Otros conceptos](#Otros conceptos)
+- [Imágenes](#que-es-una-imagen)
 
-* [Fuentes](#Fuentes)
+- [Contenedores](#contenedores)
 
+- [Volúmenes](#volumenes)
 
+- [Redes](#redes)
+
+- [Docker-Compose](#docker-compose)
+
+- [Seguridad](#seguridad)
+
+- [Otros conceptos](#otros-conceptos)
+
+- [Comandos](#comandos)
+* [Fuentes](#fuentes)
 
 ## ¿Qué es una imagen?
 
@@ -35,17 +39,18 @@ Una imagen en Docker es una especie de instantánea de un contenedor. Para enten
 
 Estas capas se definen en el fichero **Dockerfile **y son de sólo lectura (RO - Read Only). Aquí podemos ver un ejemplo de un **Dockerfile**.
 
-````dockerfile
+```dockerfile
 FROM centos:7
 
 RUN yum -y install httpd
 
 CMD ["apachectl","-DFOREGROUND"]
-````
+```
+
 El parámetro **CMD** es el que mantiene "**vivo**" el contenedor, en el ejemplo anterior es necesario utilizar como parámetro `-DFOREGROUND` del comando `apachectl` para que el contenedor se mantenga en ejecución. 
 
-!!!	note
-	Únicamente podemos encontrar una instrucción **CMD** en un **Dockerfile**, en caso de que 	haya más de una, sólo se tendrá en cuenta la última
+!!!    note
+    Únicamente podemos encontrar una instrucción **CMD** en un **Dockerfile**, en caso de que     haya más de una, sólo se tendrá en cuenta la última
 
 Podemos definir la instrucción **CMD** de tres modos diferentes:
 
@@ -106,8 +111,8 @@ A continuación se encuentran dos enlaces que explican de forma extendida las et
 
 La forma sencilla para comenzar ha realizar pruebas es crear un directorio de trabajo que utilizaremos para  desarrollar las primeras imágenes. En este directorio es necesario contar con un fichero **Dockerfile** (lo podemos crear ejecutando `touch Dockerfile`), el cual contendrá las capas que hemos visto más arriba. Este fichero es el utilizado por el comando `docker build` para crear las imágenes.
 
-!!!	note
-	Podemos llamar al fichero Dockerfile de cualquier otro modo, pero cuando creemos el contenedor (`docker build`) deberemos indicarle con el parámetro `-f` el nombre del fichero.
+!!!    note
+    Podemos llamar al fichero Dockerfile de cualquier otro modo, pero cuando creemos el contenedor (`docker build`) deberemos indicarle con el parámetro `-f` el nombre del fichero.
 
 #### Dockerfile
 
@@ -177,7 +182,6 @@ Las instrucciones que definimos dentro de este fichero deben ser lo más estrict
 
 - Evitar la instalación de paquetes innecesarios, de ese modo crearemos imágenes más ligeras.
 
-
 Además del fichero **Dockerfile** hay otro fichero importante llamado **.dockerignore**. El funcionamiento de este es similar al fichero **.gitignore**, es un fichero oculto en el que definimos que contenido del directorio no queremos que sea tenido en cuenta.
 
 #### Docker Build
@@ -206,7 +210,7 @@ A la hora de crear el fichero **Dockerfile** es muy similar al que utilizamos co
 FROM centos as test
 
 RUN fallocate -l 10M /tmp/file1 && \
-	fallocate -l 40M /tmp/file2
+    fallocate -l 40M /tmp/file2
 
 FROM alpine
 
@@ -229,15 +233,13 @@ docker rmi $(docker images -f "dangling=true" -q)
 
 En el comando anterior hemos utilizado el flag **-f**, que permite el filtrado de las imágenes siguiendo una serie de [patrones](https://github.com/moby/moby/blob/10c0af083544460a2ddc2218f37dc24a077f7d90/docs/reference/commandline/images.md#filtering).
 
-
-
 ## Contenedores
 
 Un contenedor se entiende como una capa adicional que mantiene en ejecución las capas que se han definido en el fichero Dockerfile, por este motivo es posible crear tantos contenedores como se deseen a partir de la misma imagen. A diferencia del resto de capas, esta capa es de lectura y escritura (**rw**), por lo tanto nos permite realizar modificaciones sobre las capas anteriores cuando el contenedor se encuentra en ejecución. 
 
 Todas estas modificaciones son temporales puesto que no sobrescriben el fichero Dockerfile, por lo tanto una vez que eliminemos el contenedor esas modificaciones se perderán (algunas modificaciones pueden ser persistentes mediante el uso de volúmenes que veremos más adelante).
 
-### ¿Qué nos encontramos dentro de un contenedor?
+**¿Qué nos encontramos dentro de un contenedor?**
 
 - Imagen
 - Volúmenes (se utilizan para mantener persistente cierto contenido)
@@ -255,9 +257,9 @@ La principal diferencia que nos podemos encontrar es la ligereza, un contenedor 
 
 Este comando se utiliza para iniciar los contenedores. Aunque parece evidente, no puede haber dos contenedores con el mismo nombre, aunque uno de ellos se encuentre parado.
 
-````bash
+```bash
 docker run -d jenkins -p 80:8080
-````
+```
 
 * **-d**: permite correr un contenedor en segundo plano.
 
@@ -273,17 +275,17 @@ En algunas ocasiones si no definimos la capa **CMD** es posible que el contenedo
 
 Por defecto Docker utiliza los recursos de la máquina anfitriona sin límite alguno, a pesar de ello los contenedores consumen muy pocos recursos. Podemos limitar tanto el uso de **CPU** como de **RAM**.
 
-````bash
+```bash
 #Limitando la memoria RAM
 docker run -d --memory "100mb" --name recursos-limitados centos 
-````
+```
 
 Cuando se muestran las estadísticas con el comando `docker stats` ya no mostrará la RAM limite de nuestra máquina, sino que los que hayamos establecido,  en este caso serán 100MB. Podemos pasar la limitación en **bytes** (b), **kilobytes** (k), **megabytes** (m) o **gigabytes** (g).
 
-````bash
+```bash
 #Limitando el número de cores de la CPU
 docker run -d --cpuset-cpus 0-3 --name reclimited2 centos
-````
+```
 
 Los núcleos (o cores) se pueden definir mediante un rango (como hemos hecho en el ejemplo anterior) o numerándolos y como separación una coma.
 
@@ -301,11 +303,9 @@ Establecemos que sucede cuando un contenedor se "apaga" de forma inesperada. Dis
 
 La política de reinicios se establece ejecutando el parámetro **--restart**.
 
-````bash
+```bash
 docker run --restart unless-stopped 
-````
-
-
+```
 
 ## Volúmenes
 
@@ -331,9 +331,9 @@ docker run -v /directorio-docker
 
 Estos directorios se encuentran en una ruta específica bajo el directorio "**raíz**" del servicio Docker. Para conocer dicho directorio es necesario ejecutar la siguiente instrucción:
 
-```` bash
+```bash
 docker info | grep -i root
-````
+```
 
 Entre los diferentes directorio bajo el directorio raíz de Docker, tenemos un directorio denominado volúmenes, que es el directorio donde se almacenaran estos directorios llamados **anonymous**.
 
@@ -352,27 +352,27 @@ Los siguientes comandos se utilizan para la gestión de volúmenes:
 
 <ol><li>Creando un volumen</li>
 
-````bash
+```bash
 docker volume create nombre_del_volumen
-````
+```
 
 <li>Listar los volúmenes</li>
 
-````bash
+```bash
 docker volume ls
-````
+```
 
 <li>Eliminar un volumen</li>
 
-````bash
+```bash
 docker volume rm nombre_del_volumen
-````
+```
 
 <li>Utilizar un volumen nombrado</li>
 
-````bash
+```bash
 docker run -v nombre_del_volumen:/dockercontainer
-````
+```
 
 </ol>A diferencia de los volúmenes host, donde debemos indicar la ruta completa del directorio, solo es necesario indicar el nombre del volumen que hayamos creado.
 
@@ -392,10 +392,8 @@ docker volume ls -f "dangling=true" -q | xargs docker volume rm
 
 Con [xargs](https://www.patapalo.net/blog/view/7/ejemplos-de-xargs-en-sistemas-linux-unix) pasamos el resultado a un segundo comando, de ese modo conseguimos eliminar con una única línea todos los volúmenes.
 
-!!!	note
-	Los volúmenes se pueden compartir entre varios contenedores, simplemente es indicar el volumen en el parámetro correspondiente cuando creemos los contenedores. Puede ser útil cuando necesitamos que dos contenedores accedan a la información que se encuentra en un directorio de nuestra máquina.
-
-
+!!!    note
+    Los volúmenes se pueden compartir entre varios contenedores, simplemente es indicar el volumen en el parámetro correspondiente cuando creemos los contenedores. Puede ser útil cuando necesitamos que dos contenedores accedan a la información que se encuentra en un directorio de nuestra máquina.
 
 ## Redes
 
@@ -416,7 +414,7 @@ docker network inspect nombre_de_red
 ```
 
 </ol>!!! note
-	Los contenedores que se encuentran en la misma red pueden hacerse ping entre ellos.
+    Los contenedores que se encuentran en la misma red pueden hacerse ping entre ellos.
 
 ### Creación de redes
 
@@ -448,8 +446,8 @@ Sabemos que Docker asigna como red por defecto **bridge**, por lo que si queremo
 docker run --network nombre_de_red -dti --name prueba-red ubuntu
 ```
 
-!!!	note
-	Podemos ejecutar `docker inspecto prueba-red` para ver las propiedades del contenedor, en las que aparecerá la sección NetworkSetting y se podrá ver la red asignada a este contenedor.
+!!!    note
+    Podemos ejecutar `docker inspecto prueba-red` para ver las propiedades del contenedor, en las que aparecerá la sección NetworkSetting y se podrá ver la red asignada a este contenedor.
 
 ### Conectar contenedores a la misma red
 
@@ -457,13 +455,13 @@ En la red por defecto de Docker (**red bridge**) no podemos reconocer a los cont
 
 Para realizar una prueba de comunicación entre dos contenedores podemos utilizar el comando `ping`. Podemos hacer la prueba mediante la dirección ip o mediante el nombre del contenedor.
 
-````bash
+```bash
 #Dirección ip
 docker exec nombre_contenedor bash -c "ping -c 3 ip_contenedor2"
 
 #Hostname
 docker exec nombre_contenedor bash -c "ping -c 3 nombre_contenedor2"
-````
+```
 
 ![Docker Network Ping](../Imagenes/Docker/docker-network-ping.png "Ping entre contenedores docker")
 
@@ -493,27 +491,25 @@ docker network rm nombre_red
 
 ### Tipos de drivers de red
 
-#### Bridge
+**Bridge**
 
 En Docker es el driver de red por defecto, sino se específica uno diferente es el driver utilizado por defecto a la hora de crear nuevas redes. 
 
-#### Host
+**Host**
 
 Este tipo de driver de red elimina el aislamiento entre el contenedor y la máquina anfitriona, por lo tanto utiliza la red que utiliza la máquina anfitriona. Es decir, estos contenedores podrán recibir una dirección ip de forma dinámica por parte del servidor DHCP que tengamos configurado en nuestra red local.
 
-#### Overlay
+**Overlay**
 
 Permite la comunicación entre diferentes servidores Docker (docker daemons), esto permite que diferentes servicios puedan comunicarse entre si.
 
-#### Macvlan
+**Macvlan**
 
 Permite asignar una dirección MAC a un contenedor, lo cual simula disponer de una tarjeta de red en dicho contenedor.
 
-#### None
+**None**
 
 Este tipo de driver permite deshabilitar la red en los contenedores. 
-
-
 
 ## Docker Compose
 
@@ -547,9 +543,9 @@ Este fichero cuenta con cuatro grandes partes:
 
 <li><b>Services</b> (obligatorio): los servicios hacen referencia a los contenedores. En primera instancia definimos los nombres de cada servicio (podemos elegir el que queramos), y debajo de ellos irán los parámetros que hacen referencia al propio contenedor, como el nombre del contenedor, la imagen a la que hace referencia, puertos, variables de entorno, etc.</li>
 
-<li><b>Volumes</b> (opcional): 
+<li><b>Volumes</b> (opcional):
 
-- Volúmenes nombrados: funcionan del mismo modo que ejecutando <code>docker run</code>. Lo que hacemos es definir en primer lugar el volumen que crearíamos con la instrucción <code>docker volume create</code> en "volumes" con el nombre que queramos. A continuación lo definimos dentro del servicio.
+<ul><li><b>Volúmenes nombrados</b>: funcionan del mismo modo que ejecutando <code>docker run</code>. Lo que hacemos es definir en primer lugar el volumen que crearíamos con la instrucción <code>docker volume create</code> en "volumes" con el nombre que queramos. A continuación lo definimos dentro del servicio.</li>
 
 ```yaml
 version: '3'
@@ -563,7 +559,7 @@ volumes:
   html:
 ```
 
-- Volúmenes host: no necesitamos la parte <b>volumes</b> dentro del fichero <b>docker-compose.yml</b> sino que directamente en el contenedorlo podemos parametrizar.
+<li><b>Volúmenes host</b>: no necesitamos la parte <b>volumes</b> dentro del fichero <b>docker-compose.yml</b> sino que directamente en el contenedorlo podemos parametrizar.</li></ul>
 
 ```yaml
 version: '3'
@@ -577,9 +573,9 @@ services:
 
 </li><li><b>Networks</b> (opcional):
 
-- Red Host: <b><a href="https://stackoverflow.com/questions/47074457/how-to-specify-docker-build-network-host-mode-in-docker-compose-at-the-time/47545276#47545276">es importante establecer la versión 3.4 para que funcione correctamente</a></b>. Para que funcione es necesario añadir <b>build</b>, y además añadir el <a href="https://docs.docker.com/compose/compose-file/#build">contexto</a>, que hace referencia a un directorio que contenga un Dockerfile o una url a un repositorio git. Si establecemos la ruta relativa hace referencia a la ubicación del archivo de composición. 
+<ul><li><b>Red Host</b>: <b><a href="https://stackoverflow.com/questions/47074457/how-to-specify-docker-build-network-host-mode-in-docker-compose-at-the-time/47545276#47545276">es importante establecer la versión 3.4 para que funcione correctamente</a></b>. Para que funcione es necesario añadir <b>build</b>, y además añadir el <a href="https://docs.docker.com/compose/compose-file/#build">contexto</a>, que hace referencia a un directorio que contenga un Dockerfile o una url a un repositorio git. Si establecemos la ruta relativa hace referencia a la ubicación del archivo de composición.</li> 
 
-````yaml
+```yaml
 version: '3.4'
 services:
   web:
@@ -590,11 +586,11 @@ services:
     container_name: nginx-prueba
     ports:
       - "8181:80"
-````
+```
 
-- Creación de una nueva red con subnet. <b>Aún no se permite establecer gateway</b>.
+<li>Creación de una nueva red con subnet. <b>Aún no se permite establecer gateway</b>.</li></ul>
 
-````yaml
+```yaml
 version: '3'
 services:
   web:
@@ -611,7 +607,7 @@ networks:
       driver: default
       config:
         - subnet: "192.168.50.0/24"
-````
+```
 
 En cuanto a las redes, cuando ejecutamos el comando <code>docker-compose up -d</code> se genera una red específica para <b>docker-compose</b>. Si no definimos una red, la red utilizada será la red por defecto (docker-compose_default). Cuando se crea la red, el nombre que es otorgado "<b>directorioactual_nombredelared</b>". Es posible modificar la parte del nombre que hace referencia al "directorioactual", pasando el parámetro <code>-p</code>.
 
@@ -643,15 +639,15 @@ Por otro lado, tenemos dos partes importantes que se utilizan a la hora de crear
 
 * **Command:**  se utiliza para establecer un CMD al contenedor.
 
-````yaml
+```yaml
 commmand: mkdir /bin/bash
-````
+```
 
 El comando `docker-compose` se encarga de realizar un proceso similar que el comando `docker run`, pero en este caso los diferentes parámetros se encuentran definidos en un fichero. Por lo tanto, las [políticas de reinicio](#Política de reinicio) o la [limitación de recursos](limitando recursos) también se pueden definir.
 
 * Políticas de reinicio:
 
-````yaml
+```yaml
 #Reinicio siempre
 restart: always
 
@@ -660,7 +656,7 @@ restart: unless-stopped
 
 #Únicamente se reinicia el contenedor en caso de que haya habido un fallo
 restart: on-failure
-````
+```
 
 * Limitar recursos:
 
@@ -707,7 +703,7 @@ Para que se construya una imagen, sabemos que necesitamos un fichero **Dockerfil
 * **Context:** se indica la ruta donde se encuentra el **Dockerfile** que utilizaremos para crear la imagen. Si se encuentra en el mismo directorio se utilizará el punto (**.**).
 * **Dockerfile:** el nombre del fichero si este es diferente al nombre por defecto (Dockerfile).
 
-````yaml
+```yaml
 version: '3'
 services:
   web:
@@ -716,7 +712,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile1
-````
+```
 
 _\*Si el nombre que hace referencia al Dockerfile no se ha modificado, podemos obviar estos dos parámetros._
 
@@ -728,8 +724,6 @@ services:
     image: web-test
     build: .
 ```
-
-
 
 ## Seguridad
 
@@ -743,9 +737,9 @@ Una buena práctica para controlar este comportamiento es contar con un usuario 
 
 Después de que hayamos creado el usuario que utilizaremos en los contenedores Docker, podemos obtener los ids que necestiamos (uid y gid) ejecutando el siguiente comando:
 
-````bash
+```bash
 id usuario-docker
-````
+```
 
 Para indicar al contenedor que usuario será el que ejecute el **CMD**, se lo indicaremos con el flag `-u`.
 
@@ -760,8 +754,6 @@ Imaginemos que queremos montar una biblioteca multimedia al estilo "Netflix" a p
 Esta biblioteca podemos ponerla en marcha a través de un contenedor Docker, pero para que funcione correctamente este contenedor necesita acceso a las carpetas donde se encuentra todo nuestro contenido multimedia. Bien, si el usuario del contenedor no es el adecuado el contenedor no será capaz de leer los directorios donde se encuentra todo el contenido multimedia, y por lo tanto no podrá realizar su trabajo y no tendremos nuestra ansiada biblioteca multimedia.
 
 Siguiendo con la premisa de un usuario exclusivo para Docker, este usuario debería tener acceso a los directorios donde se encuentra todo el contenido multimedia y a su vez, ser el usuario que hemos pasado por parámetros al contenedor de Plex.
-
-
 
 ## Otros conceptos
 
@@ -784,49 +776,47 @@ docker push localhost:5000/hello-world
 docker pull localhost:5000/hellos-world
 ```
 
-
-
-## Comandos 
+## Comandos
 
 ### Comandos más utilizados
 
-| Comando                    | Descripción                                                  |
-| -------------------------- | ------------------------------------------------------------ |
-| docker images              | lista las imágenes que se encuentran descargadas             |
-| docker build               | construir una imagen a partir de un fichero **Dockerfile**   |
-| docker history             | listar las capas generadas en una imagen concreta            |
-| docker run                 | crear un contenedor a partir de una imagen                   |
-| docker rm                  | eliminar un contenedor                                       |
-| docker rmi                 | eliminar una o más imágenes                                  |
-| docker ps                  | listar los contenedores                                      |
-| docker ps -a               | listar todos los contenedores                                |
-| docker rename              | cambiar el nombre de un contenedor (renombrar)               |
-| docker stop                | detener un contenedor (se puede utilizar el id o el nombre del contenedor) |
-| docker start               | iniciar un contenedor (se puede utilizar el id o el nombre del contenedor) |
-| docker restart             | reiniciar un contenedor (se puede utilizar el id o el nombre del contenedor) |
+| Comando                    | Descripción                                                                                             |
+| -------------------------- | ------------------------------------------------------------------------------------------------------- |
+| docker images              | lista las imágenes que se encuentran descargadas                                                        |
+| docker build               | construir una imagen a partir de un fichero **Dockerfile**                                              |
+| docker history             | listar las capas generadas en una imagen concreta                                                       |
+| docker run                 | crear un contenedor a partir de una imagen                                                              |
+| docker rm                  | eliminar un contenedor                                                                                  |
+| docker rmi                 | eliminar una o más imágenes                                                                             |
+| docker ps                  | listar los contenedores                                                                                 |
+| docker ps -a               | listar todos los contenedores                                                                           |
+| docker rename              | cambiar el nombre de un contenedor (renombrar)                                                          |
+| docker stop                | detener un contenedor (se puede utilizar el id o el nombre del contenedor)                              |
+| docker start               | iniciar un contenedor (se puede utilizar el id o el nombre del contenedor)                              |
+| docker restart             | reiniciar un contenedor (se puede utilizar el id o el nombre del contenedor)                            |
 | docker logs                | para mostrar los logs de un contenedor. **Con el parámetro "-f" se actualizan los logs en tiempo real** |
-| docker inspect             | muestra información detallada de como ha sido construido un contenedor |
-| docker stats               | pasando el contenedor a este comando nos muestra cuantos recursos consume dicho contenedor |
-| docker system df --verbose | muestra información detallada sobre el tamaño de todo el contenido de docker |
+| docker inspect             | muestra información detallada de como ha sido construido un contenedor                                  |
+| docker stats               | pasando el contenedor a este comando nos muestra cuantos recursos consume dicho contenedor              |
+| docker system df --verbose | muestra información detallada sobre el tamaño de todo el contenido de docker                            |
 | docker volume ls           | lista los volúmenes de Docker. Únicamente lista los que se encuentran bajo el directorio root de Docker |
-| docker exec                | permite ejecutar comandos dentro de un contenedor que esté activo |
-| docker history imagen      | muestra como ha sido creado una imagen                       |
-| docker cp                  | copiar archivos entre la máquina anfitrión y el contenedor, y viceversa |
+| docker exec                | permite ejecutar comandos dentro de un contenedor que esté activo                                       |
+| docker history imagen      | muestra como ha sido creado una imagen                                                                  |
+| docker cp                  | copiar archivos entre la máquina anfitrión y el contenedor, y viceversa                                 |
 | docker prune               | elimina todos los contenedores que se encuentran parados. Antes de eliminarlos se muestra un **aviso**. |
 
 ### Otros comandos
 
 <ol><li><b>Docker build</b></li>
 
-```` bash
+```bash
 #Construir una imagen con un nombre de Dockerfile diferente al utilizado por defecto. Para ello se utiliza el parámetro "-f".
 
 docker build -t test -f pruebadockerfile .
-````
+```
 
 <li><b>Docker exec</b></li>
 
-```` bash
+```bash
 #Entrar en la terminal de un contenedor.
 
 docker exec -ti nombre_del_contenedor bash
@@ -836,49 +826,49 @@ docker exec -ti nombre_del_contenedor bash
 #-i: interactivo
 #bash: la terminal seleccionada
 #Se puede establecer el parámetro "-u" para seleccionar un usuario específico.
-````
+```
 
 <li><b>Docker ps</b></li>
 
-````bash
+```bash
 #Eliminar todos los contenedores a través de sus IDs.
 
 docker ps -q | xargs docker rm -f
-````
+```
 
-````bash
+```bash
 #Eliminar todos los contenedores con estados "exited".
 
 docker ps -a | grep Exit | cut -d ' ' -f 1 | xargs sudo docker rm
-````
+```
 
 <li><b>Docker cp</b></li>
 
-````bash
+```bash
 #Copiar ficheros de mi máquina a un contenedor y viceversa.
 
 docker cp mimaquina.txt test:/home
 
 docker cp test:/home/mimaquina.txt .
-````
+```
 
 <li><b>Docker run</b></li>
 
-````bash
+```bash
 #Creación de un contenedor con el parámetro --rm para que se autoelimine una vez que haya salido de la sesión del contenedor.
 
 docker run --rm -ti -name test ubuntu:latest bash
-````
+```
 
 <li><b>Docker rmi</b></li>
 
-````bash
+```bash
 #Eliminar imagenes huérfanas
 docker rmi $(docker images -f "dangling=true" -q)
 
 #Eliminar imagenes por fecha. Since (imagenes creadas posteriormente a la imagen pasada en el filtro), Before (imagenes creadas anteriormente a la imagen pasada en el filtro).
 docker rmi $(docker images -f since="images" -q)
-````
+```
 
 <li><b>Docker commit</b></li>
 
