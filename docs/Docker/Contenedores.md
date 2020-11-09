@@ -1,5 +1,3 @@
-## Introducción
-
 En este apartado veremos diferentes imágenes con las que podremos poner en marcha diferentes contenedores. 
 
 Docker nos ofrece un repositorio donde podemos encontrar una gran cantidad de imagenes, [Docker Hub](https://hub.docker.com). Dentro de Docker Hub podemos encontrarnos con una comunidad ([Linuxserver](https://hub.docker.com/u/linuxserver))que se dedica a desarrollar diferentes imágenes de una gran variedad de servicios. El código de sus imagenes podemos revisarlo en [GitHub](https://github.com/linuxserver).
@@ -10,13 +8,13 @@ En GitHub han dejado una pequeña [guía](https://github.com/linuxserver/docker-
 
 He aprovechado esta nueva funcionalidad y he desarrollado un mod para transmission. 
 
-https://github.com/tzinm/remove-finished
+[https://github.com/tzinm/remove-finished](https://github.com/tzinm/remove-finished)
 
-https://hub.docker.com/r/tzinm/remove-finished
+[https://hub.docker.com/r/tzinm/remove-finished](https://hub.docker.com/r/tzinm/remove-finished)
 
-## Imágenes interesantes
+### Imágenes interesantes
 
-### [Watchtower](https://hub.docker.com/r/v2tec/watchtower)
+#### [Watchtower](https://hub.docker.com/r/v2tec/watchtower)
 
 El objetivo de este contenedor es mantener los contenedores actualizados (incluido él mismo). Automáticamente ejecutará `docker pull` para la descarga de la imagen más actual, parará el contenedor en ejecución y lo iniciará de nuevo con las mismas opciones con las que se había creado inicialmente.
 
@@ -30,7 +28,7 @@ Algunas de las opciones que podemos utilizar:
 * **Debug mode:** estableciendo esta opción el log recoge más información.
 * **Cleanup**: elimina las imagenes antiguas.
 
-#### Ejemplo
+##### Ejemplo
 
 ````dockerfile
 docker run -d \
@@ -46,4 +44,6 @@ docker run -d \
   v2tec/watchtower tautulli plex transmission heimdall syncthing watchtower --schedule "0 0 5 * * *" --cleanup --debug
 ````
 
-\* _P.D.: muchos de los usuarios que utilizamos Docker, utilizamos los contenedores desarrollado por la comunidad LinuxServer. Estos no recomiendan el uso de watchtower par actualizar los contenedores (al menos los desarrollado por ellos), sino que recomiendan varios scripts que podemos encontrar [aquí](https://blog.linuxserver.io/2019/10/01/updating-and-backing-up-docker-containers-with-version-control/) para actualizar y realizar backups del estado de los contenedores._
+!!!note
+	Muchos de los usuarios que utilizamos Docker, utilizamos los contenedores desarrollado por la comunidad LinuxServer. Estos no recomiendan el uso de watchtower par actualizar los contenedores (al menos los desarrollado por ellos), sino que recomiendan varios scripts que podemos encontrar [aquí](https://blog.linuxserver.io/2019/10/01/updating-and-backing-up-docker-containers-with-version-control/) para actualizar y realizar backups del estado de los contenedores.
+

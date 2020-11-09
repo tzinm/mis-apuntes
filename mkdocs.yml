@@ -1,4 +1,4 @@
-site_name: Documentacion
+site_name: Apuntes de Tzinm
 site_description: Apuntes sobre lo que voy aprendiendo
 site_author: Tzinm
 
@@ -11,20 +11,22 @@ edit_uri: ''
 
 theme:
   name: material
+  custom_dir: personalizaciones
   language: es
   palette:
-    primary: amber
-    accent: brown
+    scheme: preference
+    primary: brown
+    accent: blue-grey
   font:
     text: PT Sans
     code: PT Sans Mono
   icon:
-    logo: octicons/book
+#    logo: octicons/book
     repo: fontawesome/brands/github
   features:
-    - tabs
-    - instant
-  favicon: assets/images/favicon.png
+    - navigation.tabs
+    - navigation.instant
+  favicon: Imagenes/v-de-venganza.png
 
 markdown_extensions:
   - admonition
@@ -37,7 +39,15 @@ markdown_extensions:
       permalink: "#"
   - pymdownx.betterem:
       smart_enable: all
+  - def_list
+  - pymdownx.highlight:
+      linenums: false
   - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+      options:
+        custom_icons:
+          - personalizaciones/.icons
   - pymdownx.inlinehilite
   - pymdownx.mark
   - pymdownx.tabbed
@@ -65,8 +75,31 @@ extra:
 nav:
  - Home: index.md
  - Docker:
-     - Conociendo Docker: ./Docker/Docker.md
+     - Introducción a Docker: ./Docker/introduccion-docker.md
+     - Imágenes: ./Docker/imagenes-docker.md
+     - Contenedores: ./Docker/contenedores-docker.md
+     - Volúmenes: ./Docker/volumenes-docker.md
+     - Redes: ./Docker/redes-docker.md
+     - Docker Compose: ./Docker/docker-compose.md
+     - Seguridad: ./Docker/seguridad-docker.md
+     - Información adicional: ./Docker/informacion-adicional.md
      - Contenedores de ejemplo: ./Docker/Contenedores.md
+     - Referencias: ./Docker/referencias.md
+ - Kubernetes:
+     - Introducción a Kubernetes: ./Kubernetes/introduccion-kubernetes.md
+     - Kubectl: ./Kubernetes/kubectl.md
+     - Kubernetes en Raspberry Pi: ./Kubernetes/kubernetes-raspberrypi.md
+     - Referencias: ./Kubernetes/referencias.md
+ - Git:
+     - Introducción a Git: ./Git/introduccion-git.md
+     - Configuración inicial: ./Git/configuracion-inicial.md
+     - Comandos genéricos: ./Git/comandos-git.md
+     - Ramas: ./Git/ramas.md
+     - Tags: ./Git/git-tags.md
+     - Hosting para git: ./Git/git-hosting.md
+     - Bare Repositories: ./Git/bare-repositories.md
+     - Información adicional: ./Git/informacion-adicional.md
+     - Referencias: ./Git/referencias.md
  - OpenMediaVault:
      - Políticas de actualizaciones: ./OpenMediaVault/Politica-actualizaciones.md
      - Logical Volume Management: ./OpenMediaVault/LVM.md

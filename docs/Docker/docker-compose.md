@@ -1,27 +1,3 @@
-## ¿Qué es Docker?
-
-Es una herramienta que permite desplegar aplicaciones en contenedores de forma rápida y portable. Los términos que más escucharemos cuando hablamos de Docker serán "**contenedores**" e "**imágenes**".
-
-Docker se encuentra disponible para las principales plataformas, como Windows, Linux o MacOS. La máquina que aloja el servicio "**Docker**" se denomina **Docker Host**. Dentro de Docker podemos destacar tres conceptos.
-
-- **Docker Daemon:** representa el servidor de Docker.
-- **Rest API:** utilizado para la comunicación bidireccional entre cliente y servidor.
-- **Docker CLI (Command Line Interface):** representa el cliente de Docker.
-
-\*_A pesar de que se haya mencionado la línea de comandos como cliente Docker, también existe entorno gráfico para interactuar con el servidor Docker._
-
-Cuando interactuamos con contenedores o imágenes, lo hacemos a través del cliente de Docker, con lo cual nos interesa saber que es lo que podemos gestionar.
-
-
-
-
-
-
-
-
-
-## Docker Compose
-
 Es una herramienta que nos ayuda a orquestar contenedores en Docker, gestionar los diferentes contenedores de los que depende una aplicación. Existen aplicaciones que para su correcto funcionamiento dependen de varios servicios, para seguir con la simplicidad de "**un servicio = un contenedor**", Docker Compose nos permitirá administrar los diferentes contenedores de forma grupal. 
 
 Docker Compose trabaja con ficheros de tipo **yaml**, en los que se definen los contenedores, volúmenes, redes, etc. Después de completar el fichero, `docker-compose` como comando se encarga de la lectura del fichero y lanzar todos los contenedores definidos en dichero fichero.
@@ -31,7 +7,6 @@ Durante la instalación de Docker-CE esta herramienta no se instala, por lo que 
 En la máquina actual, en la que estamos trabajando bajo Linux, la instalación se haría del siguiente modo:
 
 <ol><li>Descargamos Docker-Compose.</li>
-
 ```bash
 sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 ```
@@ -48,14 +23,17 @@ El nombre del fichero que debemos utilizar es **docker-compose.yml**, donde defi
 
 Este fichero cuenta con cuatro grandes partes:
 
-<ol><li><b>Version</b> (obligatorio): para saber que número de versión (Docker-Compose) debemos establecer, buscamos en la documentación cual es la última versión, suele ser la que se recomienda utilizar.</li>
+#### Version
 
-<li><b>Services</b> (obligatorio): los servicios hacen referencia a los contenedores. En primera instancia definimos los nombres de cada servicio (podemos elegir el que queramos), y debajo de ellos irán los parámetros que hacen referencia al propio contenedor, como el nombre del contenedor, la imagen a la que hace referencia, puertos, variables de entorno, etc.</li>
+Para saber que número de versión (Docker-Compose) debemos establecer, buscamos en la documentación cual es la última versión, suele ser la que se recomienda utilizar. Esta línea dentro del fichero es obligatoria.
 
-<li><b>Volumes</b> (opcional):
+#### Services
+
+Los servicios hacen referencia a los contenedores. En primera instancia definimos los nombres de cada servicio (podemos elegir el que queramos), y debajo de ellos irán los parámetros que hacen referencia al propio contenedor, como el nombre del contenedor, la imagen a la que hace referencia, puertos, variables de entorno, etc.
+
+#### Volúmenes
 
 <ul><li><b>Volúmenes nombrados</b>: funcionan del mismo modo que ejecutando <code>docker run</code>. Lo que hacemos es definir en primer lugar el volumen que crearíamos con la instrucción <code>docker volume create</code> en "volumes" con el nombre que queramos. A continuación lo definimos dentro del servicio.</li>
-
 ```yaml
 version: '3'
 services:
@@ -80,9 +58,9 @@ services:
       - "/home/miusuario/html:/usr/share/nginx/html"
 ```
 
-</li><li><b>Networks</b> (opcional):
+#### Networks
 
-<ul><li><b>Red Host</b>: <b><a href="https://stackoverflow.com/questions/47074457/how-to-specify-docker-build-network-host-mode-in-docker-compose-at-the-time/47545276#47545276">es importante establecer la versión 3.4 para que funcione correctamente</a></b>. Para que funcione es necesario añadir <b>build</b>, y además añadir el <a href="https://docs.docker.com/compose/compose-file/#build">contexto</a>, que hace referencia a un directorio que contenga un Dockerfile o una url a un repositorio git. Si establecemos la ruta relativa hace referencia a la ubicación del archivo de composición.</li> 
+* **Red Host**: [es importante establecer la versión 3.4 para que funcione correctamente](https://stackoverflow.com/questions/47074457/how-to-specify-docker-build-network-host-mode-in-docker-compose-at-the-time/47545276#47545276). Para que funcione es necesario añadir **build**, y además añadir el [contexto](https://docs.docker.com/compose/compose-file/#build), que hace referencia a un directorio que contenga un Dockerfile o una url a un repositorio git. Si establecemos la ruta relativa hace referencia a la ubicación del archivo de composición. 
 
 ```yaml
 version: '3.4'
@@ -97,7 +75,7 @@ services:
       - "8181:80"
 ```
 
-<li>Creación de una nueva red con subnet. <b>Aún no se permite establecer gateway</b>.</li></ul>
+* Creación de una nueva red con subnet. **Aún no se permite establecer gateway**.
 
 ```yaml
 version: '3'
@@ -118,17 +96,17 @@ networks:
         - subnet: "192.168.50.0/24"
 ```
 
-En cuanto a las redes, cuando ejecutamos el comando <code>docker-compose up -d</code> se genera una red específica para <b>docker-compose</b>. Si no definimos una red, la red utilizada será la red por defecto (docker-compose_default). Cuando se crea la red, el nombre que es otorgado "<b>directorioactual_nombredelared</b>". Es posible modificar la parte del nombre que hace referencia al "directorioactual", pasando el parámetro <code>-p</code>.
+En cuanto a las redes, cuando ejecutamos el comando <code>docker-compose up -d</code> se genera una red específica para <b>docker-compose</b>. Si no definimos una red, la red utilizada será la red por defecto (docker-compose_default). 
 
-Por lo tanto si nuestro directorio actual se denomina <b>docker-compose</b> y queremos que el prefijo sea por ejemplo </b>dcprueba</b> ejecutaríamos el siguiente comando:
+Cuando se crea la red, el nombre que es otorgado "<b>directorioactual_nombredelared</b>". Es posible modificar la parte del nombre que hace referencia al "directorioactual", pasando el parámetro <code>-p</code>.
+
+Por lo tanto si nuestro directorio actual se denomina <b>docker-compose</b> y queremos que el prefijo sea por ejemplo **dcprueba** ejecutaríamos el siguiente comando:
 
 ```bash
 #Modificar el nombre de red a "dcprueba_default"
 
 docker-compose -p dcprueba up -d
 ```
-
-</li></ol>
 
 Por otro lado, tenemos dos partes importantes que se utilizan a la hora de crear contenedores.
 
@@ -223,7 +201,8 @@ services:
       dockerfile: Dockerfile1
 ```
 
-_\*Si el nombre que hace referencia al Dockerfile no se ha modificado, podemos obviar estos dos parámetros._
+!!!note
+	Si el nombre que hace referencia al Dockerfile no se ha modificado, podemos obviar estos dos parámetros.
 
 ```yaml
 version: '3'
@@ -233,12 +212,4 @@ services:
     image: web-test
     build: .
 ```
-
-
-
-## Otros conceptos
-
-
-
-## Fuentes
 

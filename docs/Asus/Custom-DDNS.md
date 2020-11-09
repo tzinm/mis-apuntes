@@ -4,7 +4,7 @@ Según la wikipedia, el DNS dinámico "_es un servicio que permite la actualizac
 
 Habitualmente, el proveedor de internet que tenemos contratado no nos ofrece una dirección ip pública fija. Esto quiere decir, que la dirección ip de acceso desde el exterior a nuestra red es variable, y aunque es habitual que esta no varíe en un largo periodo de tiempo, una alternativa es el uso de algún servicio de DNS dinámico.
 
-## Servicios DNS+
+### Servicios DNS+
 
 Hay una larga lista de servicios, hasta hace poco he estado utilizando **[no-ip](https://www.noip.com/)**, el cual tiene un servicio gratuito de hasta tres nombres de dominio. El inconveniente que tiene es que hay que verificar cada dominio una vez al mes. Por este motivo he comenzado a utilizar [Duck DNS](https://www.duckdns.org/), un servicio gratuito que una vez lo hayamos configurado no tenemos que realizar ninguna acción.
 
@@ -45,7 +45,7 @@ chmod +x /jffs/scripts/ddns-start
 
 * En la parte inferior tendremos un botón para **aplicar cambios**. Con esto ya habríamos configurado duckdns como nuestro servicio de DNS dinámico.
 
-## Información adicional
+### Información adicional
 
 En la red disponemos de diversos scripts para utilizar como **ddns-start**. Dos de los scripts que he probado y funcionan correctamente son los siguientes:
 

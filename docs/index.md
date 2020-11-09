@@ -4,10 +4,15 @@ Este es mí rinconcito, el lugar donde iré dejando los apuntes sobre algunos de
 
 Cualquier sugerencia es bienvenida :smiley:, en la parte derecha de las notas de pie de página se encuentran mis medios de contacto.
 
-[Docker](./Docker/Docker.md)
+:fontawesome-brands-docker: - [Docker](./Docker/Docker.md)
 
-[OpenMediaVault](./OpenMediaVault/Politica-actualizaciones.md)
+:fontawesome-brands-git: - [Git](./Git/introduccion-git.md)
 
-[MacOS](./MacOS/personalizando-terminal.md)
+:iconos-kubernetes: - [Kubernetes](./Kubernetes/introduccion-kubernetes.md)
 
-[Router Asus](./Asus/Custom-DDNS.md)
+:iconos-nas: - [OpenMediaVault](./OpenMediaVault/Politica-actualizaciones.md)
+
+:fontawesome-brands-apple: - [MacOS](./MacOS/personalizando-terminal.md)
+
+:iconos-router-wireless: - [Router Asus](./Asus/Custom-DDNS.md)
+
