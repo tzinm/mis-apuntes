@@ -1,6 +1,4 @@
 
-
-
 <!doctype html>
 <html lang="es" class="no-js">
   <head>
@@ -12,30 +10,33 @@
       
       
       
+      
         <meta name="author" content="Tzinm">
       
-      <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.5">
+      <link rel="shortcut icon" href="../../Imagenes/v-de-venganza.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.4">
     
     
       
-        <title>Rclone in OMV - Documentacion</title>
+        <title>Rclone in OMV - Apuntes de Tzinm</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.df84b5fe.min.css">
-      
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.8435c73a.min.css">
-      
+      <link rel="stylesheet" href="../../assets/stylesheets/main.358818c7.min.css">
       
         
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.f0267088.min.css">
         
-        <meta name="theme-color" content="#ffc107">
+          
+          
+          <meta name="theme-color" content="#795649">
+        
       
     
     
     
       
+        
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:300,400,400i,700%7CPT+Sans+Mono&display=fallback">
         <style>body,input{font-family:"PT Sans",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"PT Sans Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
@@ -52,7 +53,13 @@
   
     
     
-    <body dir="" data-md-color-primary="amber" data-md-color-accent="brown">
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="preference" data-md-color-primary="brown" data-md-color-accent="blue-grey">
+      
+        <script>matchMedia("(prefers-color-scheme: dark)").matches&&document.body.setAttribute("data-md-color-scheme","slate")</script>
+      
   
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -69,12 +76,14 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid" aria-label="Cabecera">
-    <a href="../.." title="Documentacion" class="md-header-nav__button md-logo" aria-label="Documentacion">
+    <a href="../.." title="Apuntes de Tzinm" class="md-header-nav__button md-logo" aria-label="Apuntes de Tzinm">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M3 5h4v1H3V5zm0 3h4V7H3v1zm0 2h4V9H3v1zm11-5h-4v1h4V5zm0 2h-4v1h4V7zm0 2h-4v1h4V9zm2-6v9c0 .55-.45 1-1 1H9.5l-1 1-1-1H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h5.5l1 1 1-1H15c.55 0 1 .45 1 1zm-8 .5L7.5 3H2v9h6V3.5zm7-.5H9.5l-.5.5V12h6V3z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
 
     </a>
     <label class="md-header-nav__button md-icon" for="__drawer">
@@ -84,7 +93,7 @@
       
         <div class="md-header-nav__ellipsis">
           <span class="md-header-nav__topic md-ellipsis">
-            Documentacion
+            Apuntes de Tzinm
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
@@ -116,7 +125,7 @@
       <div class="md-search__scrollwrap" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
-            
+            Initializing search
           </div>
           <ol class="md-search-result__list"></ol>
         </div>
@@ -144,8 +153,6 @@
     
     <div class="md-container" data-md-component="container">
       
-        
-      
       
         
           
@@ -171,8 +178,34 @@
   
     <li class="md-tabs__item">
       
-        <a href="../../Docker/Docker/" class="md-tabs__link">
+        <a href="../../Docker/introduccion-docker/" class="md-tabs__link">
           Docker
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Kubernetes/introduccion-kubernetes/" class="md-tabs__link">
+          Kubernetes
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Git/introduccion-git/" class="md-tabs__link">
+          Git
         </a>
       
     </li>
@@ -230,15 +263,17 @@
               <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Documentacion" class="md-nav__button md-logo" aria-label="Documentacion">
+    <a href="../.." title="Apuntes de Tzinm" class="md-nav__button md-logo" aria-label="Apuntes de Tzinm">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M3 5h4v1H3V5zm0 3h4V7H3v1zm0 2h4V9H3v1zm11-5h-4v1h4V5zm0 2h-4v1h4V7zm0 2h-4v1h4V9zm2-6v9c0 .55-.45 1-1 1H9.5l-1 1-1-1H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h5.5l1 1 1-1H15c.55 0 1 .45 1 1zm-8 .5L7.5 3H2v9h6V3.5zm7-.5H9.5l-.5.5V12h6V3z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
 
     </a>
-    Documentacion
+    Apuntes de Tzinm
   </label>
   
     <div class="md-nav__source">
@@ -262,7 +297,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../.." title="Home" class="md-nav__link">
+    <a href="../.." class="md-nav__link">
       Home
     </a>
   </li>
@@ -279,15 +314,11 @@
     
     <label class="md-nav__link" for="nav-2">
       Docker
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="Docker" data-md-level="1">
       <label class="md-nav__title" for="nav-2">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+        <span class="md-nav__icon md-icon"></span>
         Docker
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -299,8 +330,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Docker/Docker/" title="Conociendo Docker" class="md-nav__link">
-      Conociendo Docker
+    <a href="../../Docker/introduccion-docker/" class="md-nav__link">
+      Introducción a Docker
     </a>
   </li>
 
@@ -311,8 +342,312 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Docker/Contenedores/" title="Contenedores de ejemplo" class="md-nav__link">
+    <a href="../../Docker/imagenes-docker/" class="md-nav__link">
+      Imágenes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/contenedores-docker/" class="md-nav__link">
+      Contenedores
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/volumenes-docker/" class="md-nav__link">
+      Volúmenes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/redes-docker/" class="md-nav__link">
+      Redes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/docker-compose/" class="md-nav__link">
+      Docker Compose
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/seguridad-docker/" class="md-nav__link">
+      Seguridad
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/informacion-adicional/" class="md-nav__link">
+      Información adicional
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/Contenedores/" class="md-nav__link">
       Contenedores de ejemplo
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/referencias/" class="md-nav__link">
+      Referencias
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Kubernetes
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Kubernetes" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        Kubernetes
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/introduccion-kubernetes/" class="md-nav__link">
+      Introducción a Kubernetes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/kubectl/" class="md-nav__link">
+      Kubectl
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/kubernetes-raspberrypi/" class="md-nav__link">
+      Kubernetes en Raspberry Pi
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Kubernetes/referencias/" class="md-nav__link">
+      Referencias
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Git
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Git" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        Git
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/introduccion-git/" class="md-nav__link">
+      Introducción a Git
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/configuracion-inicial/" class="md-nav__link">
+      Configuración inicial
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/comandos-git/" class="md-nav__link">
+      Comandos genéricos
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/ramas/" class="md-nav__link">
+      Ramas
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/git-tags/" class="md-nav__link">
+      Tags
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/git-hosting/" class="md-nav__link">
+      Hosting para git
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/bare-repositories/" class="md-nav__link">
+      Bare Repositories
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/informacion-adicional/" class="md-nav__link">
+      Información adicional
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/referencias/" class="md-nav__link">
+      Referencias
     </a>
   </li>
 
@@ -331,19 +666,15 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
     
-    <label class="md-nav__link" for="nav-3">
+    <label class="md-nav__link" for="nav-5">
       OpenMediaVault
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="OpenMediaVault" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
         OpenMediaVault
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -355,7 +686,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../Politica-actualizaciones/" title="Políticas de actualizaciones" class="md-nav__link">
+    <a href="../Politica-actualizaciones/" class="md-nav__link">
       Políticas de actualizaciones
     </a>
   </li>
@@ -367,7 +698,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../LVM/" title="Logical Volume Management" class="md-nav__link">
+    <a href="../LVM/" class="md-nav__link">
       Logical Volume Management
     </a>
   </li>
@@ -389,12 +720,10 @@
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
         Rclone in OMV
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
-        </span>
+        <span class="md-nav__icon md-icon"></span>
       </label>
     
-    <a href="./" title="Rclone in OMV" class="md-nav__link md-nav__link--active">
+    <a href="./" class="md-nav__link md-nav__link--active">
       Rclone in OMV
     </a>
     
@@ -406,9 +735,7 @@
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
       Tabla de contenidos
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
@@ -480,19 +807,15 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
     
-    <label class="md-nav__link" for="nav-4">
+    <label class="md-nav__link" for="nav-6">
       MacOS
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="MacOS" data-md-level="1">
-      <label class="md-nav__title" for="nav-4">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon"></span>
         MacOS
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -504,7 +827,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../MacOS/personalizando-terminal/" title="Terminal" class="md-nav__link">
+    <a href="../../MacOS/personalizando-terminal/" class="md-nav__link">
       Terminal
     </a>
   </li>
@@ -522,19 +845,15 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
     
-    <label class="md-nav__link" for="nav-5">
+    <label class="md-nav__link" for="nav-7">
       Router Asus
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
     </label>
     <nav class="md-nav" aria-label="Router Asus" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-        </span>
+      <label class="md-nav__title" for="nav-7">
+        <span class="md-nav__icon md-icon"></span>
         Router Asus
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -546,7 +865,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Asus/Custom-DDNS/" title="Configurando DuckDNS" class="md-nav__link">
+    <a href="../../Asus/Custom-DDNS/" class="md-nav__link">
       Configurando DuckDNS
     </a>
   </li>
@@ -575,9 +894,7 @@
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
       Tabla de contenidos
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
@@ -643,9 +960,6 @@
               
                 
                 
-                  
-                
-                
                 <h1 id="rclone-in-omv">Rclone in OMV<a class="headerlink" href="#rclone-in-omv" title="Permanent link">#</a></h1>
 <p>En esta pequeña guía voy a mostrar la configuración de Rclone con Google Drive. Se puede utilizar con muchos más servicios. Consultar <a href="https://rclone.org/">aquí</a></p>
 <p><img alt="Servicio Rclone" src="https://dl.dropboxusercontent.com/s/fpp146ye8ijyt2e/Rclone_servicios.png?dl=0" /></p>
@@ -696,7 +1010,7 @@ sudo mandb
 <p><img alt="Rclone remote server" src="https://dl.dropboxusercontent.com/s/fw1nfkx3uh1iye9/Rclone_servidor_remoto.png?dl=0" /></p>
 <p>Al haber pulsado la opción "<strong>n</strong>" nos mostrará una dirección que debemos copiar y pegar en nuestro navegador. Esta dirección nos solicitará autenticarnos con la cuenta de Google Drive que queremos vincular con Rclone.  Una vez que nos autentiquemos nos aparecerá un código que copiaremos y pegaremos en la línea que nos solicita Rclone.</p>
 <p><img alt="Rclone api google" src="https://dl.dropboxusercontent.com/s/wq5i7a9hbtkq8r5/Rclone_api.png?dl=0" /></p>
-<p>Antes de finalizar, nos preguntará si deseamos configurar como un Team Drive [^1], no es nuestro caso por lo tanto seleccionaremos "<strong>n</strong>".</p>
+<p>Antes de finalizar, nos preguntará si deseamos configurar como un Team Drive <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>, no es nuestro caso por lo tanto seleccionaremos "<strong>n</strong>".</p>
 <p><img alt="Rclone Team Drive" src="https://dl.dropboxusercontent.com/s/m70pq7mb4hsl9iw/Rclone_teamdrive.png?dl=0" /></p>
 <p>Nos mostrará un pequeño resumen con el "<em>remote</em>" que hemos configurado. Para finalizar debemos seleccionar con la letra "<strong>q</strong>" (Quit config).</p>
 <p><img alt="Rclone finalizamos configuración" src="https://dl.dropboxusercontent.com/s/xqbu414lkpwm5cn/Rclone_configuracion_final.png?dl=0" /></p>
@@ -711,7 +1025,6 @@ sudo mandb
 rclone sync ASIR: /sharedfolders/ASIRDrive -v --log-file<span class="o">=</span>/home/Logs/rclonesync.txt -u --bwlimit 8650k --tpslimit <span class="m">10</span> --transfers <span class="m">15</span> --exclude Maquinas_Virtuales/ --exclude ISOS/
 <span class="nb">exit</span>
 </code></pre></div>
-
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1">#Comprobamos que el script no se está ejecutando mediante pidof</span>
 <span class="k">if</span> pidof -o %PPID -x sh /home/Scripts/rclonesync.sh<span class="p">;</span> <span class="k">then</span>
@@ -724,7 +1037,6 @@ rclone sync ASIR: /sharedfolders/ASIRDrive -v --log-file<span class="o">=</span>
 <span class="nb">echo</span> <span class="s2">&quot;¡La ejecución del script ha finalizado!&quot;</span>
 <span class="nb">exit</span>
 </code></pre></div>
-
 <ul>
 <li><strong>Rclone copy (script):</strong></li>
 </ul>
@@ -733,7 +1045,6 @@ rclone sync ASIR: /sharedfolders/ASIRDrive -v --log-file<span class="o">=</span>
 rclone copy TzinmDrive:General /sharedfolders/CursosDrive -v --log-file<span class="o">=</span>/home/Logs/rclonecopy.txt -u --bwlimit 8650k --tpslimit <span class="m">10</span> -transfers <span class="m">15</span>
 <span class="nb">exit</span>
 </code></pre></div>
-
 <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="c1">#Comprobamos que el script no se está ejecutando mediante pidof</span>
 <span class="k">if</span> pidof -o %PPID -x /home/Scripts/rclonecopy.sh<span class="p">;</span> <span class="k">then</span>
@@ -746,13 +1057,11 @@ rclone copy TzinmDrive:General /sharedfolders/CursosDrive -v --log-file<span cla
 <span class="nb">echo</span> <span class="s2">&quot;¡La ejecución del script ha finalizado!&quot;</span>
 <span class="nb">exit</span>
 </code></pre></div>
-
 <p><em>La ruta que he establecido después de sh puede diferir con la que utilicéis. Tenéis que indicar la ruta donde se encuentra vuestro script.</em></p>
 <p>Una vez que tenemos los script creados sólo quedará añadirlos al cron, que podemos aprovecharnos de la interfaz web de OpenMediaVault o añadirlos mediante comandos, en ambos casos es muy sencillo.</p>
 <p>Una vez que hemos creado los Scripts en el directorio de Rclone que hayamos decidido, les daremos permiso de ejecución para que no sea necesario llamar al comando <code>sh</code> y con poner la ruta completa del script sea suficiente. Esto nos evitará algunos problemas que he visto que surgen con el comando pidof.</p>
 <div class="highlight"><pre><span></span><code>chmod a+x /home/Scripts/*
 </code></pre></div>
-
 <ul>
 <li><strong>a+x:</strong> otorgamos permisos ejecución a todos los usuarios.</li>
 <li>
@@ -774,7 +1083,6 @@ rclone copy TzinmDrive:General /sharedfolders/CursosDrive -v --log-file<span cla
 <p>Como digo, no he visto forma de hacerlo por lo tanto voy a añadir al <strong>Cron</strong> un comando a ejecutar para que compruebe el tamaño de los logs y en caso de que supere el tamaño que nosotros le indiquemos (en mi caso serán 10MB) que realice una acción.</p>
 <div class="highlight"><pre><span></span><code>find /home/Logs/ -type f -size +10M -exec rm -f {} \;
 </code></pre></div>
-
 <ul>
 <li><strong>find:</strong> comando utilizado para realizar búsquedas.</li>
 <li><strong>/home/Logs/:</strong> es la ruta en la que queremos buscar, podemos indicarle la que queramos. La ruta que he marcado es donde se encuentran los Logs de rclone.</li>
@@ -810,7 +1118,6 @@ rclone copy TzinmDrive:General /sharedfolders/CursosDrive -v --log-file<span cla
 <span class="err">2. --exclude-nombre_del_fichero</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><strong>¿Cuál es la diferencia entre ambos?</strong> Con la primera opción enumeramos un fichero concreto, en cambio, con la segunda opción llamamos a un fichero que almacena diferente ficheros que queremos excluir. Evitamos tener que enumerar uno a uno los ficheros en el comando completo.</p>
 <h2 id="otros-comandos-utiles">Otros comandos útiles:<a class="headerlink" href="#otros-comandos-utiles" title="Permanent link">#</a></h2>
 <ul>
@@ -818,7 +1125,6 @@ rclone copy TzinmDrive:General /sharedfolders/CursosDrive -v --log-file<span cla
 </ul>
 <div class="highlight"><pre><span></span><code>rclone listremotes
 </code></pre></div>
-
 <ul>
 <li><strong>List</strong>: nos permite listar el contenido. Hay varios comandos que podemos ejecutar que nos mostrarán diferentes resultados.</li>
 </ul>
@@ -831,13 +1137,11 @@ rclone lsf REMOTO:
 <span class="c1">#Lista todo el contenido (ficheros y directorios) incluido lo que se encuentra en todas las subcarpetas.</span>
 rclone lsl REMOTO:
 </code></pre></div>
-
 <ul>
 <li><strong>Tree</strong>: nos muestra un lista de todo el contenido en forma de árbol. <em>(No lo recomiendo utilizar ya que tarda bastante en ejecutarse)</em>.</li>
 </ul>
 <div class="highlight"><pre><span></span><code>rclone tree REMOTO:
 </code></pre></div>
-
 <p><img alt="Rclone tree" src="https://dl.dropboxusercontent.com/s/18hofevtlq3t1j3/Rclone_tree.png?dl=0" /></p>
 <ul>
 <li><strong>Help:</strong> nos permite ver diferentes comandos o flags que podemos introducir.</li>
@@ -846,13 +1150,10 @@ rclone lsl REMOTO:
 rclone help flags
 rclone help backends
 </code></pre></div>
-
 <p><em>Donde escribo **REMOTO*</em> es necesario sustituirlo por el nombre de vuestra unidad configurada*</p>
 <h2 id="referencias">Referencias:<a class="headerlink" href="#referencias" title="Permanent link">#</a></h2>
 <ul>
-<li>
-<p>[^1]: <a href="https://support.google.com/a/answer/7212025?hl=es&amp;ref_topic=7337266">¿Qué son las unidades de equipos (Team Drive)?</a></p>
-</li>
+<li></li>
 <li>
 <p><a href="https://rclone.org/docs/#logging">Funcionamiento de logging en rclone</a></p>
 </li>
@@ -869,6 +1170,14 @@ rclone help backends
 <p><a href="https://rclone.org/docs/#log-file-file">Rclone configure</a></p>
 </li>
 </ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="https://support.google.com/a/answer/7212025?hl=es&amp;ref_topic=7337266">¿Qué son las unidades de equipos (Team Drive)?</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
                 
               
               
@@ -887,7 +1196,7 @@ rclone help backends
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Pie">
         
-          <a href="../LVM/" title="Logical Volume Management" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../LVM/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -902,7 +1211,7 @@ rclone help backends
           </a>
         
         
-          <a href="../../MacOS/personalizando-terminal/" title="Terminal" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../../MacOS/personalizando-terminal/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
@@ -979,15 +1288,15 @@ rclone help backends
       
     </div>
     
-      <script src="../../assets/javascripts/vendor.83fe6e3c.min.js"></script>
-      <script src="../../assets/javascripts/bundle.7e1cb91c.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copiar al portapapeles", "clipboard.copied": "Copiado al portapapeles", "search.config.lang": "es", "search.config.pipeline": "", "search.config.separator": "", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados"}</script>
+      <script src="../../assets/javascripts/vendor.7e0ee788.min.js"></script>
+      <script src="../../assets/javascripts/bundle.b3a72adc.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copiar al portapapeles", "clipboard.copied": "Copiado al portapapeles", "search.config.lang": "es", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "B\u00fasqueda", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
           base: "../..",
-          features: ["tabs", "instant"],
+          features: ['navigation.tabs', 'navigation.instant'],
           search: Object.assign({
-            worker: "../../assets/javascripts/worker/search.37585f48.min.js"
+            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

@@ -1,0 +1,1135 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Apuntes sobre lo que voy aprendiendo">
+      
+      
+      
+      
+        <meta name="author" content="Tzinm">
+      
+      <link rel="shortcut icon" href="../../Imagenes/v-de-venganza.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.4">
+    
+    
+      
+        <title>Kubernetes en Raspberry Pi - Apuntes de Tzinm</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.358818c7.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.f0267088.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#795649">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:300,400,400i,700%7CPT+Sans+Mono&display=fallback">
+        <style>body,input{font-family:"PT Sans",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"PT Sans Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="preference" data-md-color-primary="brown" data-md-color-accent="blue-grey">
+      
+        <script>matchMedia("(prefers-color-scheme: dark)").matches&&document.body.setAttribute("data-md-color-scheme","slate")</script>
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#desplegando-kubernetes" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Cabecera">
+    <a href="../.." title="Apuntes de Tzinm" class="md-header-nav__button md-logo" aria-label="Apuntes de Tzinm">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Apuntes de Tzinm
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Kubernetes en Raspberry Pi
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Limpiar" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/tzinm/mis-apuntes" title="Ir al repositorio" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tzinm/mis-apuntes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+
+  
+
+<nav class="md-tabs md-tabs--active" aria-label="Pestañas" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." class="md-tabs__link">
+        Home
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Docker/introduccion-docker/" class="md-tabs__link">
+          Docker
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../introduccion-kubernetes/" class="md-tabs__link md-tabs__link--active">
+          Kubernetes
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Git/introduccion-git/" class="md-tabs__link">
+          Git
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../OpenMediaVault/Politica-actualizaciones/" class="md-tabs__link">
+          OpenMediaVault
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../MacOS/personalizando-terminal/" class="md-tabs__link">
+          MacOS
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Asus/Custom-DDNS/" class="md-tabs__link">
+          Router Asus
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Apuntes de Tzinm" class="md-nav__button md-logo" aria-label="Apuntes de Tzinm">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Apuntes de Tzinm
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/tzinm/mis-apuntes" title="Ir al repositorio" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tzinm/mis-apuntes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Docker
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Docker" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        Docker
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/introduccion-docker/" class="md-nav__link">
+      Introducción a Docker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/imagenes-docker/" class="md-nav__link">
+      Imágenes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/contenedores-docker/" class="md-nav__link">
+      Contenedores
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/volumenes-docker/" class="md-nav__link">
+      Volúmenes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/redes-docker/" class="md-nav__link">
+      Redes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/docker-compose/" class="md-nav__link">
+      Docker Compose
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/seguridad-docker/" class="md-nav__link">
+      Seguridad
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/informacion-adicional/" class="md-nav__link">
+      Información adicional
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/Contenedores/" class="md-nav__link">
+      Contenedores de ejemplo
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/referencias/" class="md-nav__link">
+      Referencias
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Kubernetes
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Kubernetes" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        Kubernetes
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../introduccion-kubernetes/" class="md-nav__link">
+      Introducción a Kubernetes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../kubectl/" class="md-nav__link">
+      Kubectl
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Kubernetes en Raspberry Pi
+    </a>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../referencias/" class="md-nav__link">
+      Referencias
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Git
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Git" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        Git
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/introduccion-git/" class="md-nav__link">
+      Introducción a Git
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/configuracion-inicial/" class="md-nav__link">
+      Configuración inicial
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/comandos-git/" class="md-nav__link">
+      Comandos genéricos
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/ramas/" class="md-nav__link">
+      Ramas
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/git-tags/" class="md-nav__link">
+      Tags
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/git-hosting/" class="md-nav__link">
+      Hosting para git
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/bare-repositories/" class="md-nav__link">
+      Bare Repositories
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/informacion-adicional/" class="md-nav__link">
+      Información adicional
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/referencias/" class="md-nav__link">
+      Referencias
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      OpenMediaVault
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="OpenMediaVault" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        OpenMediaVault
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../OpenMediaVault/Politica-actualizaciones/" class="md-nav__link">
+      Políticas de actualizaciones
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../OpenMediaVault/LVM/" class="md-nav__link">
+      Logical Volume Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../OpenMediaVault/Rclone/" class="md-nav__link">
+      Rclone in OMV
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      MacOS
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="MacOS" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon"></span>
+        MacOS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../MacOS/personalizando-terminal/" class="md-nav__link">
+      Terminal
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Router Asus
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Router Asus" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        <span class="md-nav__icon md-icon"></span>
+        Router Asus
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Asus/Custom-DDNS/" class="md-nav__link">
+      Configurando DuckDNS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="desplegando-kubernetes">Desplegando Kubernetes<a class="headerlink" href="#desplegando-kubernetes" title="Permanent link">#</a></h1>
+<p>Actualmente disponemos diferentes formas de desplegar Kubernetes. Basado en la <strong>nube</strong>, siendo este muy sencillo de configurar y mantener, y basado en <strong>máquinas físicas</strong> (bare metal), sistema más complejo de desplegar y mantener.</p>
+<p>Este proyecto lo llevaremos a cabo en un clúster con <strong>3 Raspberry Pi</strong>, explicando en este apartado los pasos necesarios para desplegar nuestro clúster de Kubernetes.</p>
+<p>Comenzaremos haciendo una breve introducción de las primeras configuraciones que debemos realizar para acceder a nuestras Raspberry Pi. Puesto que este proyecto se centra en Kubernetes, no profundizaremos en los pasos que debemos seguir para tener un SO funcionando en una Raspberry Pi.</p>
+<p>El sistema elegido para cada una de nuestras Raspberry Pi ha sido <strong>CentOS 7</strong>, la cual podemos descargar desde <a href="http://isoredirect.centos.org/altarch/7/isos/armhfp">este enlace</a>. Ya que el proyecto que realizamos se basa centra en Kubernetes, no profundizaremos sobre los pasos que debemos seguir para instalar y configurar los SO en la Raspberry Pi.</p>
+<p>Una vez que tenemos la imagen que deseamos (la elegida ha sido la minimal) podemos seguir los pasos para preparar la tarjeta SD y las recomendaciones que nos encontramos en la <a href="https://wiki.centos.org/SpecialInterestGroup/AltArch/armhfp">wiki de CentOS</a>.</p>
+<p>Partiendo de que ya tenemos las Raspberry Pi funcionando correctamente, vamos a configurar nuestro equipo agregando las llaves y los datos de conexión para facilitar el acceso vía ssh.</p>
+<p>Fichero <code>.ssh/config</code></p>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">Host rpi4</span>
+    <span class="l l-Scalar l-Scalar-Plain">HostName 192.168.11.200</span>
+    <span class="l l-Scalar l-Scalar-Plain">User root</span>
+    <span class="l l-Scalar l-Scalar-Plain">IdentityFile ~/.ssh/rpi4.pub</span>
+<span class="l l-Scalar l-Scalar-Plain">Host rpi2</span>
+    <span class="l l-Scalar l-Scalar-Plain">HostName 192.168.11.205</span>
+    <span class="l l-Scalar l-Scalar-Plain">User root</span>
+    <span class="l l-Scalar l-Scalar-Plain">IdentityFile ~/.ssh/rpi2.pub</span>
+<span class="l l-Scalar l-Scalar-Plain">Host rpi2-nfs</span>
+    <span class="l l-Scalar l-Scalar-Plain">Hostname 192.168.11.220</span>
+    <span class="l l-Scalar l-Scalar-Plain">User root</span>
+    <span class="l l-Scalar l-Scalar-Plain">IdentityFile ~/.ssh/rpi2-nfs.pub</span>
+</code></pre></div>
+<p>A continuación nos centraremos con las configuraciones que debemos realizar para preprar nuestro clúster. En primer lugar configurar el fichero <code>/etc/hosts</code> de cada una de las placas y añadir todos los nodos que conforman el clúster.</p>
+<div class="highlight"><pre><span></span><code>192.168.11.200 rpi4.local
+192.168.11.205 rpi2.local
+192.168.11.206 rpi3-node.local
+192.168.11.207 rpi3.local
+</code></pre></div>
+<p>En la distribuciones que cuentan con <strong>SELinux</strong> es necesario establecerlo en el modo <strong>permisivo</strong>. Esto se debe a que los contenedores necesitan acceder al sistema de ficheros del anfitrión.</p>
+<p>Establecer SELinux en modo permisivo en la sesión actual.</p>
+<div class="highlight"><pre><span></span><code>setenforce <span class="m">0</span>
+</code></pre></div>
+<p>De igual modo es neceario modificar el fichero SELinux para que se aplique la configuración de forma permanente.</p>
+<div class="highlight"><pre><span></span><code>sed -i <span class="p">&amp;</span><span class="c1">#39;s/SELINUX=enforcing$/SELINUX=permissive/&amp;#39; /etc/selinux/config</span>
+</code></pre></div>
+<p>Necesitamos abrir una serie de puertos para diferentes finalidades.</p>
+<table>
+<thead>
+<tr>
+<th>Protocolo</th>
+<th>Puerto</th>
+<th>Función</th>
+<th>Comando</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TCP</td>
+<td>64443</td>
+<td>Kubernetes API</td>
+<td><code>firewall-cmd --permanent --add-port=6443/tcp</code></td>
+</tr>
+<tr>
+<td>TCP</td>
+<td>2379-2380</td>
+<td>API del cliente del servidor etcd</td>
+<td><code>firewall-cmd --permanent --add-port=2379-2380/tcp</code></td>
+</tr>
+<tr>
+<td>TCP</td>
+<td>10250</td>
+<td>Kubelet API</td>
+<td><code>firewall-cmd --permanent --add-port=10250/tcp</code></td>
+</tr>
+<tr>
+<td>TCP</td>
+<td>10251</td>
+<td>Kube-scheduler</td>
+<td><code>firewall-cmd --permanent --add-port=10251/tcp</code></td>
+</tr>
+<tr>
+<td>TCP</td>
+<td>10252</td>
+<td>Kube-controller-manager</td>
+<td><code>firewall-cmd --permanent --add-port=10252/tcp</code></td>
+</tr>
+</tbody>
+</table>
+<p>Después de configurar los puertos en el firewall es necesario ejecutar los siguientes comandos:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">#Recargar la configuración del firewall</span>
+firewall-cmd --reload
+
+<span class="c1">#Añadir el modulo br_netfilter al kernel</span>
+modprobe br_netfilter
+
+<span class="c1">#Iptables configuration</span>
+<span class="nb">echo</span> <span class="p">&amp;</span><span class="c1">#39;1&amp;#39; &gt; /proc/sys/net/bridge/bridge-nf-call-iptables</span>
+
+<span class="c1">#Deshabilitar swap</span>
+swapoff -a
+</code></pre></div>
+<p>Tanto el comando relacionado tanto con iptables como con swap únicamente afectan al sistema en ejecución, por lo que si deseamos que los cambios sean permanentes es necesario realizar varias modificaciones.</p>
+<ul>
+<li>
+<p>Fichero <code>/etc/fstab</code>: comentar (<strong>#</strong>) la línea que hace referencia a swap.</p>
+</li>
+<li>
+<p>Fichero <code>/etc/sysctl.conf</code>: añadir la línea <code>net.bridge.bridge-nf-call-iptables=1</code>.</p>
+</li>
+</ul>
+<p>A continuación procederemos a la instalación de los paquetes necesarios para el funcionamiento del Nodo Master.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>En la guía que podemos encontrar en la web de Kubernetes, nos facilitan los datos del repositorio para la descarga de paquetes. Este repositorio <a href="https://github.com/kubernetes/release/issues/520">no funciona correctamente</a> en armhfp. La alternativa que tenemos es decargarnos los paquetes manualmente desde <a href="[Index of /kubernetes/yum/repos/kubernetes-el7-armhfp/Packages/](https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-armhfp/Packages/)">este enlace</a> e instalarlos con rpm.</p>
+</div>
+<p>Debido a que el repositorio que hemos configurado no funciona correctamente es necesario realizar la instalación de los paquetes y sus dependencias manualmente.</p>
+<p>Una vez descargado <strong>kubeadm</strong>, si ejecutamos el comando <code>rpm -ivh kbueadm.armhfp.rpm</code> nos aparecerá el siguiente mensaje:</p>
+<div class="highlight"><pre><span></span><code>error: Error de dependencias:
+    cri-tools &gt;<span class="o">=</span> <span class="m">1</span>.13.0 es necesario por kubeadm-1.18.2-0.armhfp
+    kubectl &gt;<span class="o">=</span> <span class="m">1</span>.13.0 es necesario por kubeadm-1.18.2-0.armhfp
+    kubelet &gt;<span class="o">=</span> <span class="m">1</span>.13.0 es necesario por kubeadm-1.18.2-0.armhfp
+    kubernetes-cni &gt;<span class="o">=</span> <span class="m">0</span>.7.5 es necesario por kubeadm-1.18.2-0.armhfp
+</code></pre></div>
+<p>Vamos a descargarnos los paquetes manualmente.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">#cri-tools</span>
+curl -O https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-armhfp/Packages/7a54305aa8552436821a60337683164a50d34fd76ac558dfd2ef529e6e29395e-cri-tools-1.13.0-0.armhfp.rpm
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Será necesario seguir el mismo procedimiento con el resto de paquetes.</p>
+</div>
+<p>Procedemos a instalar los paquetes.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">#Kubeadm</span>
+rpm -ivh --ignorearch *.rpm
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>La opción <code>--ignorearch</code> es necesaria puesto que los metadatos de los paquetes rpm que hacen referencia a la arquitectura no son correctos. Es posible que nos dé algún error de dependencias, será necesario instalar los paquetes que nos indique.</p>
+</div>
+<p>Continuamos con la puesta en marcha del sistema, iniciando y habilitando los diferentes servicios necesarios para el correcto funcionamiento de kubernetes.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">#Docker</span>
+yum install -y docker
+
+systemctl <span class="nb">enable</span> docker
+
+systemctl start docker
+
+<span class="c1">#Kubelet</span>
+systemctl <span class="nb">enable</span> kubelet
+
+systemctl start kubelet
+</code></pre></div>
+<p>Si comprobamos el estado de <strong>kubelet</strong> <code>systemctl status kubeletet</code>, es posible que aparezca un error relacionado con <strong>cgroup_driver</strong>. Para solucionarlos es necesario añadir en el fichero <code>/etc/sysconfig/kubelet</code> <em>KUBELET_EXTRA_ARGS=--cgroup-driver=systemd</em>.</p>
+<p>El siguiente paso será iniciar <strong>kubeadm</strong> ejecutando el comando <code>kubeadm init</code>. Si la ejecución del comando ha sido exitosa veremos la siguiente información.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Es posible que nos aparezca un error <strong>cgroups_memory missing</strong>. Para solventar este error es necesario añadir <strong>cgroup_enable=memory</strong> y <strong>cgroup_memory=1</strong> en el fichero <code>/boot/cmdline.txt</code>.</p>
+</div>
+<p><img alt="kubeadm init" src="../../Imagenes/Kubernetes/kubeadm-init.png" /></p>
+<p>Siguiendo las indicaciones que podemos ver en la imagen ejecutaremos los comandos que nos indican.</p>
+<div class="highlight"><pre><span></span><code>mkdir -p <span class="nv">$HOME</span>/.kube
+
+cp -i /etc/kubernetes/admin.conf <span class="nv">$HOME</span>/.kube/config
+
+chown <span class="k">$(</span>id -u<span class="k">)</span>:<span class="k">$(</span>id -g<span class="k">)</span> <span class="nv">$HOME</span>/.kube/config
+</code></pre></div>
+<p><strong>Kubectl</strong> es la herramienta de línea de comandos (más adelante se estudiará en profundidad) utilizada para controlar Kubernetes. Uno de los primeros comandos que utilizaremos será para comprobar el estado de los nodos.</p>
+<div class="highlight"><pre><span></span><code>kubectl get nodes
+</code></pre></div>
+<p>El resultado nos mostrará el/los nodos que tenemos en nuestro clúster. En el momento de instalación solo disponíamos del Nodo Master.</p>
+<div class="highlight"><pre><span></span><code>NAME   STATUS     ROLES    AGE     VERSION
+rpi4   NotReady   master   6h45m   v1.18.2
+</code></pre></div>
+<p>El Nodo Master se encuentra como <strong>no disponible</strong>, será necesario seleccionar el modo de gestionar la red de Kubernetes de la lista que podemos encontrar <a href="https://kubernetes.io/docs/concepts/cluster-administration/networking/#how-to-implement-the-kubernetes-networking-model">aquí</a>. La elegida es <a href="https://kubernetes.io/docs/concepts/cluster-administration/networking/#weave-net-from-weaveworks">Weave Net from Weaveworks</a> puesto que es simple de utilizar y su funcionamiento es fiable.</p>
+<div class="highlight"><pre><span></span><code>kubectl apply -f <span class="s2">&quot;https://cloud.weave.works/k8s/net?k8s-version=</span><span class="k">$(</span>kubectl version <span class="p">|</span> base64 <span class="p">|</span> tr -d <span class="p">&amp;</span><span class="c1">#39;\n&amp;#39;)&quot;</span>
+</code></pre></div>
+<p>Para añadir nodos a nuestro clúster será necesario seguir el proceso que hemos seguido hasta este momento. El único comando que no es necesario ejecutar es <code>kubeadm init</code>, que es el comando encargado de crear el clúster de Kubernetes.</p>
+<p>Al final del proceso será necesario añadir el nuevo nodo al clúster ejecutando el comando que hemos visto en la imagen anterior.</p>
+<div class="highlight"><pre><span></span><code>kubeadm join <span class="m">192</span>.168.11.200:6443 --token yk32k7.oc6ezdeidt9w3331 --discovery-token-ca-cert-hash sha256:c3c449377707d7f1a85dad7e67f6ad6de864780430b78107f07b86209abdbe60
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Si no hemos capturado la información que nos mostraba la cli después de crear el clúster, podemos obtener la misma información ejecutando <code>kubeadm token create --print-join-command</code>.</p>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Pie">
+        
+          <a href="../kubectl/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Anterior
+                </span>
+                Kubectl
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../referencias/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Siguiente
+                </span>
+                Referencias
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2020 Tzinm
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/tzinm" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://hub.docker.com/u/tzinm" target="_blank" rel="noopener" title="hub.docker.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://t.me/tzinm" target="_blank" rel="noopener" title="t.me" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9l-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239.1-92.2c11.1-4 20.8 2.7 17.2 19.5z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/tzinm1" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.7e0ee788.min.js"></script>
+      <script src="../../assets/javascripts/bundle.b3a72adc.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copiar al portapapeles", "clipboard.copied": "Copiado al portapapeles", "search.config.lang": "es", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "B\u00fasqueda", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: ['navigation.tabs', 'navigation.instant'],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>

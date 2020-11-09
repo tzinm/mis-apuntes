@@ -1,0 +1,1580 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Apuntes sobre lo que voy aprendiendo">
+      
+      
+      
+      
+        <meta name="author" content="Tzinm">
+      
+      <link rel="shortcut icon" href="../../Imagenes/v-de-venganza.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.4">
+    
+    
+      
+        <title>Kubectl - Apuntes de Tzinm</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.358818c7.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.f0267088.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#795649">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:300,400,400i,700%7CPT+Sans+Mono&display=fallback">
+        <style>body,input{font-family:"PT Sans",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"PT Sans Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="preference" data-md-color-primary="brown" data-md-color-accent="blue-grey">
+      
+        <script>matchMedia("(prefers-color-scheme: dark)").matches&&document.body.setAttribute("data-md-color-scheme","slate")</script>
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#creando-objetos" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Cabecera">
+    <a href="../.." title="Apuntes de Tzinm" class="md-header-nav__button md-logo" aria-label="Apuntes de Tzinm">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Apuntes de Tzinm
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Kubectl
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Limpiar" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/tzinm/mis-apuntes" title="Ir al repositorio" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tzinm/mis-apuntes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+
+  
+
+<nav class="md-tabs md-tabs--active" aria-label="Pestañas" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." class="md-tabs__link">
+        Home
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Docker/introduccion-docker/" class="md-tabs__link">
+          Docker
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../introduccion-kubernetes/" class="md-tabs__link md-tabs__link--active">
+          Kubernetes
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Git/introduccion-git/" class="md-tabs__link">
+          Git
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../OpenMediaVault/Politica-actualizaciones/" class="md-tabs__link">
+          OpenMediaVault
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../MacOS/personalizando-terminal/" class="md-tabs__link">
+          MacOS
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../Asus/Custom-DDNS/" class="md-tabs__link">
+          Router Asus
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Apuntes de Tzinm" class="md-nav__button md-logo" aria-label="Apuntes de Tzinm">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Apuntes de Tzinm
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/tzinm/mis-apuntes" title="Ir al repositorio" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tzinm/mis-apuntes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Docker
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Docker" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        Docker
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/introduccion-docker/" class="md-nav__link">
+      Introducción a Docker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/imagenes-docker/" class="md-nav__link">
+      Imágenes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/contenedores-docker/" class="md-nav__link">
+      Contenedores
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/volumenes-docker/" class="md-nav__link">
+      Volúmenes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/redes-docker/" class="md-nav__link">
+      Redes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/docker-compose/" class="md-nav__link">
+      Docker Compose
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/seguridad-docker/" class="md-nav__link">
+      Seguridad
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/informacion-adicional/" class="md-nav__link">
+      Información adicional
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/Contenedores/" class="md-nav__link">
+      Contenedores de ejemplo
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Docker/referencias/" class="md-nav__link">
+      Referencias
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Kubernetes
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Kubernetes" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        Kubernetes
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../introduccion-kubernetes/" class="md-nav__link">
+      Introducción a Kubernetes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Kubectl
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      Kubectl
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#creando-objetos" class="md-nav__link">
+    Creando objetos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#desplegando-objetos" class="md-nav__link">
+    Desplegando objetos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gestion-de-recursos" class="md-nav__link">
+    Gestión de recursos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volumenes" class="md-nav__link">
+    Volúmenes
+  </a>
+  
+    <nav class="md-nav" aria-label="Volúmenes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-se-definen-en-el-fichero-yaml" class="md-nav__link">
+    ¿Cómo se definen en el fichero yaml?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#labels" class="md-nav__link">
+    Labels
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replicaset" class="md-nav__link">
+    ReplicaSet
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#health-checks" class="md-nav__link">
+    Health Checks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    Deployment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#services" class="md-nav__link">
+    Services
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug" class="md-nav__link">
+    Debug
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../kubernetes-raspberrypi/" class="md-nav__link">
+      Kubernetes en Raspberry Pi
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../referencias/" class="md-nav__link">
+      Referencias
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Git
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Git" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        Git
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/introduccion-git/" class="md-nav__link">
+      Introducción a Git
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/configuracion-inicial/" class="md-nav__link">
+      Configuración inicial
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/comandos-git/" class="md-nav__link">
+      Comandos genéricos
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/ramas/" class="md-nav__link">
+      Ramas
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/git-tags/" class="md-nav__link">
+      Tags
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/git-hosting/" class="md-nav__link">
+      Hosting para git
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/bare-repositories/" class="md-nav__link">
+      Bare Repositories
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/informacion-adicional/" class="md-nav__link">
+      Información adicional
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Git/referencias/" class="md-nav__link">
+      Referencias
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      OpenMediaVault
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="OpenMediaVault" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        OpenMediaVault
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../OpenMediaVault/Politica-actualizaciones/" class="md-nav__link">
+      Políticas de actualizaciones
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../OpenMediaVault/LVM/" class="md-nav__link">
+      Logical Volume Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../OpenMediaVault/Rclone/" class="md-nav__link">
+      Rclone in OMV
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      MacOS
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="MacOS" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon"></span>
+        MacOS
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../MacOS/personalizando-terminal/" class="md-nav__link">
+      Terminal
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Router Asus
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Router Asus" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        <span class="md-nav__icon md-icon"></span>
+        Router Asus
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Asus/Custom-DDNS/" class="md-nav__link">
+      Configurando DuckDNS
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#creando-objetos" class="md-nav__link">
+    Creando objetos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#desplegando-objetos" class="md-nav__link">
+    Desplegando objetos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gestion-de-recursos" class="md-nav__link">
+    Gestión de recursos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volumenes" class="md-nav__link">
+    Volúmenes
+  </a>
+  
+    <nav class="md-nav" aria-label="Volúmenes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-se-definen-en-el-fichero-yaml" class="md-nav__link">
+    ¿Cómo se definen en el fichero yaml?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#labels" class="md-nav__link">
+    Labels
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replicaset" class="md-nav__link">
+    ReplicaSet
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#health-checks" class="md-nav__link">
+    Health Checks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    Deployment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#services" class="md-nav__link">
+    Services
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug" class="md-nav__link">
+    Debug
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>Kubectl</h1>
+                
+                <p>El cliente de Kubernetes que nos permite controlarlo es <strong>kubectl</strong>. Es una herramienta de línea de comandos para interactuar con la API de Kubernetes, utilizada para gestionar la mayor parte de objetos de Kubernetes, tales como los pods, servicios, namespaces, etc. Además permite conocer el estado general del clúster.</p>
+<p>Esta herramienta se encuentra disponible en los diferentes Sistemas Operativos. En este caso la instalación se ha realizado en <strong>MacOS Catalina</strong> y en <strong>Fedora 30</strong>, que serán los equipos desde controlaremos el clúster de Kubernetes.</p>
+<div class="highlight"><pre><span></span><code>brew install kubectl
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1">#Añadir repositorio</span>
+cat <span class="s">&lt;&lt;EOF&gt; /etc/yum.repos.d/kubernetes.repo</span>
+<span class="s">    [kubernetes]</span>
+<span class="s">    name=Kubernetes</span>
+<span class="s">    basurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64</span>
+<span class="s">    enabled=1</span>
+<span class="s">    gpgcheck=1</span>
+<span class="s">    repo_gpgcheck=1</span>
+<span class="s">    gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg</span>
+<span class="s">    EOF</span>
+
+<span class="c1">#Descargar el paquete</span>
+sudo dnf install kubectl
+</code></pre></div>
+<p>Para más información: <a href="https://kubernetes.io/es/docs/tasks/tools/install-kubectl/">Install kubectl</a></p>
+<p>Una vez que tenemos kubectl instalado localmente, necesitamos un fichero <strong>kubeconfig</strong> (fichero utilizado para configurar el acceso al clúster) para que kubectl se comunique con la API de Kubernetes. Aprovecharemos el fichero que se ha generado en el nodo master, lo descargaremos y guardaremos en el directorio <code>$HOME/.kube</code>, que es el directorio donde kubectl busca el fichero con el nombre <strong>config</strong>.</p>
+<p>Podemos visualizar el fichero con kubectl.</p>
+<div class="highlight"><pre><span></span><code>kubectl config view
+</code></pre></div>
+<p>Si el fichero de configuración no tiene el nombre por defecto (config), deberemos utilizar la opción <code>--kubeconfig=fichero-configuracion</code>.</p>
+<div class="highlight"><pre><span></span><code>kubectl config --kubeconfig<span class="o">=</span>fichero-configuracion view
+</code></pre></div>
+<p><a href="https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#set-the-kubeconfig-environment-variable">Set the KUBECONFIG environment variable</a> - <a href="https://kubernetes.io/es/docs/concepts/configuration/organize-cluster-access-kubeconfig/">Organize cluster access kubeconfig</a></p>
+<p>Si ya disponemos de conexión con el clúster podremos conocer tanto la versión de <strong>kubectl</strong> como de la <strong>API de Kubernetes</strong>.</p>
+<div class="highlight"><pre><span></span><code>kubectl version    
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Para facilitar el uso de <strong>kubectl</strong> podemos habilitar el autocompletado ejecutando el comando <code>sudo kubectl completion bash &gt; /etc/bas_completion.d/kubectl</code> <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>.</p>
+</div>
+<p>El siguiente paso será comprobar el estado del clúster.</p>
+<div class="highlight"><pre><span></span><code>kubectl get cs
+</code></pre></div>
+<p>El resultado será similar a esto:</p>
+<div class="highlight"><pre><span></span><code>NAME                 STATUS    MESSAGE             ERROR
+scheduler            Healthy   ok                  
+controller-manager   Healthy   ok                  
+etcd-0               Healthy   <span class="o">{</span><span class="s2">&quot;health&quot;</span>:<span class="s2">&quot;true&quot;</span><span class="o">}</span>   
+</code></pre></div>
+<ul>
+<li>
+<p><strong>Scheduler</strong>: es el responsable de distribuir los pods en los diferentes nodos del clúster.</p>
+</li>
+<li>
+<p><strong>Controller-manager</strong>: es el encargado de correr varios controladores que regulan el estado del clúster, por ejemplo que las replicas que hayamos definido se encuentren disponibles.</p>
+</li>
+<li>
+<p><strong>Servidor etcd</strong>: es el lugar en donde se almacenan todos los objetos.</p>
+</li>
+</ul>
+<p>Listamos todos los nodos del clúster.</p>
+<div class="highlight"><pre><span></span><code>kubectl get nodes
+</code></pre></div>
+<p>Tal y como hemos visto en estos dos últimos comandos, <code>kubectl get recurso</code> (pods, services, nodes, etc.) nos muestra un listado de los recursos en el <strong>namespace</strong> en el que nos encontramos (recordamos que <strong>default</strong> es el namespace por defecto). </p>
+<p>Podemos ampliar la información que nos muestras utilizando la opoción <code>-o wide</code>. Además, otra de las opciones interesantes es <code>--no-headers</code>, suprime los encabezados.</p>
+<p>Otro de los comandos importantes que nos provee <strong>kuibectl</strong> es <code>kubectl desribe recurso objeto</code>. La salida de este comando muestra información muy completa del objeto que le hayamos pasado.</p>
+<p>Por ejemplo podemos solicitar la información de un nodo del clúster en particular.</p>
+<div class="highlight"><pre><span></span><code>kubectl describe nodes rpi4
+</code></pre></div>
+<h3 id="creando-objetos">Creando objetos<a class="headerlink" href="#creando-objetos" title="Permanent link">#</a></h3>
+<p>Los objetos en Kubernetes se definen en un fichero con sintaxis <strong>json</strong> o <strong>yaml</strong>. Estos ficheros se utilizan tanto para crear, actualizar o eliminar dichos objetos.</p>
+<p>Para crear o actualizar un objeto utilizaremos el siguiente comando.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">#Este comando nos permite crear y actualizar un objeto</span>
+kubectl apply -f fichero.yaml
+</code></pre></div>
+<p>Disponemos de la posibilidad de actualizar los objetos de forma interactiva, es decir se abre un editor en la terminal, realizaremos las modificaciones que deseemos y una vez que guardemos Kubernetes se encargará de aplicar los cambios.</p>
+<div class="highlight"><pre><span></span><code>kubectl edit recurso objeto    
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Es importante tener cuidado con los cambios que se realizan al vuelo puesto que estos no modifican el manifiesto, por lo que lo más recomendable es aplicar cambios con el comando <code>kubectl apply -f</code>. </p>
+</div>
+<p>El comando para eliminar los objetos es muy similar al de crearlos. Cuando eliminamos un pod, todos los datos almacenados dentro de los contenedores asociados al pod son eliminados. Para que esto no suceda disponemos de <strong>volúmenes persistentes</strong> que veremos más adelante.</p>
+<div class="highlight"><pre><span></span><code> kubectl detete -f fichero.yaml
+</code></pre></div>
+<div class="highlight"><pre><span></span><code> kubectl delete recurso objeto
+</code></pre></div>
+<h3 id="desplegando-objetos">Desplegando objetos<a class="headerlink" href="#desplegando-objetos" title="Permanent link">#</a></h3>
+<p>Disponemos varias formas de desplegar pods en nuestro clúster. La forma más sencilla es ejecutando <code>kubectl run</code>. Por ejemplo si queremos desplegar un pod de Nginx como servidor web.</p>
+<p>Podemos desplegar un pod ejecutando el siguiente comando:</p>
+<div class="highlight"><pre><span></span><code>kubectl run nombre-pod --image<span class="o">=</span>nginx:latest
+</code></pre></div>
+<p>En el flag <code>--image</code> podemos añadir una imagen local o una imagen que se encuentra alojada en el registry oficcial de Docker.</p>
+<p>Ejemplo de un manifiesto de pod.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">containers</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx:latest</span>
+      <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx-prueba</span>
+      <span class="nt">ports</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">web</span>
+          <span class="nt">containerPort</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
+          <span class="nt">protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">TCP</span>
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>El fichero yaml que vemos será el fichero base que utilizaremos para añadirle nuevas secciones que iremos conociendo a lo largo del proyecto.</p>
+</div>
+<h3 id="gestion-de-recursos">Gestión de recursos<a class="headerlink" href="#gestion-de-recursos" title="Permanent link">#</a></h3>
+<p>Kubernetes no solo trata que el despliegue de aplicaciones sea más sencillo, sino que además intenta que el aprovechamiento de los recursos esté mejor optimizado.</p>
+<p>Nos encontramos con dos formas para la gestión de los recursos.</p>
+<ul>
+<li><strong>Resource requests</strong>: la cantidad mínima de recursos que necesita una aplicación para funcionar.</li>
+<li><strong>Resource limits</strong>: la cantidad máxima de recursos que una aplicación puede hacer uso.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Los recursos se especifican por cada contenedor, no por cada pod.</p>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">containers</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx:latest</span>
+      <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx-prueba</span>
+      <span class="nt">resources</span><span class="p">:</span>
+        <span class="nt">requests</span><span class="p">:</span>
+          <span class="nt">cpu</span><span class="p">:</span> <span class="s">&quot;500m&quot;</span>
+          <span class="nt">memory</span><span class="p">:</span> <span class="s">&quot;128Mi&quot;</span>
+        <span class="nt">limits</span><span class="p">:</span>
+          <span class="nt">cpu</span><span class="p">:</span> <span class="s">&quot;1000m&quot;</span>
+          <span class="nt">memory</span><span class="p">:</span> <span class="s">&quot;256Mi&quot;</span>
+      <span class="nt">ports</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">web</span>
+          <span class="nt">containerPort</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
+          <span class="nt">protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">TPC</span>
+</code></pre></div>
+<p>Cuando el sistema se queda sin memoria, <strong>kubelet</strong> se encarga de "matar" los contenedores que están utilizando más memoria de la que hemos definido. Los contenedores volverán a iniciarse con un consumo menor de recursos ajustados a los que hayamos definido.</p>
+<h3 id="volumenes">Volúmenes<a class="headerlink" href="#volumenes" title="Permanent link">#</a></h3>
+<p>Los volúmenes son una herramienta muy útil cuando trabajamos con contenedores, nos permite mantener datos más haya del contenedor que los haya generado. Los principales motivos por los que deseamos utilizar volúmenes:</p>
+<ul>
+<li>
+<p><strong>Sincronización</strong>: acceso a por parte de más de un contenedor a los mismos datos.</p>
+</li>
+<li>
+<p><strong>Caché</strong>: datos como miniaturas que no son relevantes pero que se utilizan para mostrar algo dentro de una aplicación. Si los datos los almacenamos en un volúmen no será necesario crearlos cada vez que el pod sea recreado. Evitamos un consumo extra de recursos.</p>
+</li>
+<li>
+<p><strong>Datos persistentes</strong>: datos que queremos que se mantengan en el tiempo a pesar de que el pod del que dependían no vaya a utilizarse.</p>
+</li>
+</ul>
+<h4 id="como-se-definen-en-el-fichero-yaml">¿Cómo se definen en el fichero yaml?<a class="headerlink" href="#como-se-definen-en-el-fichero-yaml" title="Permanent link">#</a></h4>
+<ul>
+<li><strong>Nivel spec</strong>: se definen los volúmenes que pueden ser accedidos por el/los contenedores de un pod. Si un pod dispone de más de un contenedor no es necesario que todos ellos utilicen los volúmenes definidos. Además existe la posibilidad de utilizar discos remotos, como por ejemplo volúmenes NFS.</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Es interesante utilizar servicios remotos como NFS porque nos permite que los datos persistentes sean independientes del nodo donde se encuentre el Pod.</p>
+</div>
+<ul>
+<li><strong>Nivel container</strong>: en este apartado se define el volumen del contenedor que irá asociado al volumen definido en el apartado anterior.</li>
+</ul>
+<p>A continuación podemos ver un ejemplo con dos volúmenes que podemos utilizar en los contenedores que contenga el Pod.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">volumes</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;nginx-data&quot;</span>
+      <span class="nt">hostPath</span><span class="p">:</span>
+        <span class="nt">path</span><span class="p">:</span> <span class="s">&quot;/nginx/my-web&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;nginx-data-nfs&quot;</span>
+      <span class="nt">nfs</span><span class="p">:</span>
+        <span class="nt">server</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rpi-nfs.local</span>
+        <span class="nt">path</span><span class="p">:</span> <span class="s">&quot;/exports&quot;</span>
+  <span class="nt">containers</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx:latest</span>
+      <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx-prueba</span>
+      <span class="nt">volumeMounts</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">mountPath</span><span class="p">:</span> <span class="s">&quot;/usr/share/nginx/html&quot;</span>
+          <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;nginx-data&quot;</span>
+      <span class="nt">ports</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">web</span>
+          <span class="nt">containerPort</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
+          <span class="nt">protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">TPC</span>
+</code></pre></div>
+<h3 id="labels">Labels<a class="headerlink" href="#labels" title="Permanent link">#</a></h3>
+<p>Nos facilita la identificación de los diferentes objetos de nuestro clúster. Esto nos permite <strong>agrupar</strong>, <strong>visualizar</strong> y <strong>operar</strong> de una forma más sencilla.</p>
+<div class="highlight"><pre><span></span><code>--labels<span class="o">=</span><span class="s2">&quot;version=1,app=nginx&quot;</span>
+</code></pre></div>
+<p>Podemos añadir manualmente <strong>labels</strong> a un objeto que ya hemos creado.</p>
+<div class="highlight"><pre><span></span><code>kubectl label pods nginx <span class="s2">&quot;env=lab&quot;</span>
+</code></pre></div>
+<p>También podemos eliminar un <strong>label</strong> (o varios) que esté asociado a un objeto. Se utiliza un el símbolo <strong>-</strong> para ello.</p>
+<div class="highlight"><pre><span></span><code>kubectl label pods nginx <span class="s2">&quot;app-&quot;</span>
+</code></pre></div>
+<p>Mostrar columnas adicionales con la información referente a los <strong>labels</strong>.</p>
+<div class="highlight"><pre><span></span><code>kubectl get pods -L app
+</code></pre></div>
+<p>El resultado nos muestra una columna adicional que hace referencia a la clave del label que hemos indicado en el comando anterior. En dicha columna aparecerá el valor que tiene asignado dicha clave. Si el pod no tiene asignada <strong>clave:valor</strong>, no aparecerá nada.</p>
+<div class="highlight"><pre><span></span><code>NAME     READY   UP-TO-DATE   AVAILABLE   AGE     APP
+nginx    <span class="m">1</span>/1     <span class="m">1</span>            <span class="m">1</span>           6d23h   nginx
+nginx2   <span class="m">1</span>/1     <span class="m">1</span>            <span class="m">1</span>           3d1h    
+</code></pre></div>
+<p>Una de las funciones que nos aportan los <strong>labels</strong> es la posiblidad de filtrar objetos.</p>
+<div class="highlight"><pre><span></span><code>kubectl get pods --selector<span class="o">=</span><span class="s2">&quot;version=1&quot;</span>
+</code></pre></div>
+<p>Podemos utilizar una serie de operadores para utilizar junto al flag <strong>--selector</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Operador</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>key=value</td>
+<td><strong>Key</strong> es igual a <strong>value</strong></td>
+</tr>
+<tr>
+<td>kye!=value</td>
+<td><strong>Key</strong> es diferente a <strong>value</strong></td>
+</tr>
+<tr>
+<td>key in (value1, value2)</td>
+<td><strong>Key</strong> puede ser tanto <strong>value1</strong> como <strong>value2</strong></td>
+</tr>
+<tr>
+<td>key notin (value1, value2)</td>
+<td><strong>Key</strong> no es ni <strong>value1</strong> ni <strong>value2</strong></td>
+</tr>
+<tr>
+<td>key</td>
+<td><strong>Key</strong> está definida</td>
+</tr>
+<tr>
+<td>!key</td>
+<td><strong>Key</strong> no está definida</td>
+</tr>
+</tbody>
+</table>
+<p>Por ejemplo podemos mostrar los pods que se correspondan tanto con la versión 1 como con la versión 2.</p>
+<div class="highlight"><pre><span></span><code>kubectl get pods --selector<span class="o">=</span><span class="s2">&quot;version in (1,2)&quot;</span>
+</code></pre></div>
+<p>También podemos utilizar una estructura similar en los fichero <strong>yaml</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">selector</span><span class="p">:</span>
+  <span class="nt">matchLabels</span><span class="p">:</span>
+    <span class="nt">app</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx</span>
+  <span class="nt">matchExpressions</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span><span class="nt">key</span><span class="p">:</span> <span class="nv">ver</span><span class="p p-Indicator">,</span><span class="nt"> operator</span><span class="p">:</span> <span class="nv">IN</span><span class="p p-Indicator">,</span><span class="nt"> values</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">1</span><span class="p p-Indicator">,</span> <span class="nv">2</span><span class="p p-Indicator">]}</span>
+</code></pre></div>
+<h3 id="replicaset">ReplicaSet<a class="headerlink" href="#replicaset" title="Permanent link">#</a></h3>
+<p>Un ReplicaSet nos garantiza que un número concreto de instancias (lo definimos nosotros) de un Pod estén siempre operativas. La recomendación es aplicarlo exclusivamente a Pods sin estado (<strong>stateless</strong>), es decir que no tengan sesiones como puede ser una base de datos, ya que podría darnos problemas. Este objeto nos ofrece una serie de ventajas.</p>
+<ul>
+<li><strong>Redundancia</strong> &rarr; la posibilidad de disponer de varias instancias de un mismo Pod nos proporciona <strong>tolerancia a fallos</strong>.</li>
+<li><strong>Escalabilidad</strong> &rarr; nos permite repartir el "trabajo" entre las diferentes instancias.</li>
+</ul>
+<p>El manifiesto de un ReplicaSet debe contener lo siguiente:</p>
+<ol>
+<li>Un nombre que identifique al propio ReplicaSet.</li>
+<li>En la sección <strong>spec</strong> es necesario indicar el número de replicas.</li>
+<li>Podemos añadir una sección más para definir una serie de Pods en el manifiesto del ReplicaSet. No es necesario añadir esta seccion (<strong>template</strong>) ya que el ReplicaSet a través de los labels será capaz de identificar los Pods que debe "adoptar".</li>
+</ol>
+<p>Podemos comprobar si un Pod está siendo controlado por un ReplicaSet. Para ello ejecutaremos <code>kubectl get pods nombre-pod -o yaml</code> que nos dará como resultado el siguiente contenido.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx-f89759699-b662g</span>
+  <span class="nt">namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
+  <span class="nt">ownerReferences</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
+    <span class="nt">blockOwnerDeletion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="nt">controller</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ReplicaSet</span>
+    <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx-f89759699</span>
+    <span class="nt">uid</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8743e705-b5a0-4f04-8e7b-09acea2418da</span>
+</code></pre></div>
+<p>Observamos que <code>controller: true</code> y es del tipo ReplicaSet <code>kind: ReplicaSet</code>.</p>
+<p>En ocasiones es posible que neceistemos escalar de forma urgente y temporal un set de Pods, para ello tenemos el comando <code>kubectl scale</code>.</p>
+<div class="highlight"><pre><span></span><code>kubectl scale replicasets nginx --replicas<span class="o">=</span><span class="m">8</span>
+</code></pre></div>
+<p>Con el ejemplo anterior hemos escalado hasta ocho Pods, lo que nos permitirá en un momento determinado recibir más peticiones en nuestro servidor web Nginx.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Para que estos cambias sean permanente deberemos actualizar el manifiesto correspondiente al ReplicaSet.</p>
+</div>
+<h3 id="health-checks">Health Checks<a class="headerlink" href="#health-checks" title="Permanent link">#</a></h3>
+<p>Es la forma de mantener una aplicación viva en todo momento, si una aplicación falla Kubernetes se encarga de reiniciarla. Kubernetes nos proporciona dos formas <em>health checks</em> que se utilizan para objetivos diferentes, ambas se definen a nivel de contenedor.</p>
+<ul>
+<li>
+<p><strong>Liveness</strong>: verifica a nivel lógico de aplicación si esta está funcionando correctamente.</p>
+</li>
+<li>
+<p><strong>Readiness</strong>: verifica cuando un contenedor está preparado para recibir peticiones.</p>
+</li>
+</ul>
+<p>Cuando tenemos definidos cualquiera de estos dos <em>health checks</em>, podemos verificar el estado de los pods ejecutando <code>kubectl describe pods nombre-pod</code>.</p>
+<p>A continuación vemos un ejemplo de <strong>livenessProbe</strong> que hemos aplicado al deployment de Ghost.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">containers</span><span class="p">:</span>
+<span class="err">    </span><span class="nt">livenessProbe</span><span class="p">:</span>
+<span class="err">      </span><span class="nt">tcpSocket</span><span class="p">:</span>
+<span class="err">        </span><span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ghost-port</span>
+  <span class="err">    </span><span class="l l-Scalar l-Scalar-Plain">initialDelaySeconds</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">30</span>
+  <span class="err">    </span><span class="l l-Scalar l-Scalar-Plain">timeoutSeconds</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+  <span class="err">    </span><span class="l l-Scalar l-Scalar-Plain">periodSeconds</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
+  <span class="err">    </span><span class="l l-Scalar l-Scalar-Plain">failureThreshold</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
+</code></pre></div>
+<p>En este ejemplo hemos utilizado </p>
+<ul>
+<li>
+<p><strong>initialDelaySeconds</strong>: es el tiempo en segundos que debe esperar Kubernetes desde que el contenedor se ha iniciado para iniciar <strong>livenesProbe</strong>.</p>
+</li>
+<li>
+<p><strong>timeoutSeconds</strong>: es el tiempo en segundos de espera hasta que <strong>livenessProbe</strong> entiende que el contenedor está fallando.</p>
+</li>
+<li>
+<p><strong>periodSeconds</strong>: cuanto tiempo en segundos espera Kubernetes para realizar la siguiente prueba.</p>
+</li>
+<li>
+<p><strong>failureThreshold</strong>: el número de intentos que realizará <strong>livenessProbe</strong>.</p>
+</li>
+</ul>
+<h3 id="deployment">Deployment<a class="headerlink" href="#deployment" title="Permanent link">#</a></h3>
+<p>Es el objeto que se utiliza habitualmente para el despliegue de aplicaciones ya que engloba la creación de un Pod y un ReplicaSet. Además es una forma sencilla para controlar el lanzamiento de nuevas versiones de nuestras aplicaciones debido a que nos permite movernos tanto hacía atrás (versiones antiguas) como hacía delante (versiones nuevas) facilmente.</p>
+<p>Para que la gestión de las diferentes versiones de nuestra aplicación sea sencilla, este guarda un histórico de los cambios que se han ido desplegando. Es recomendable establecer un máximo de versiones, lo haremos en el manifiesto del Deployment.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">revisionHistoryLimit</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+</code></pre></div>
+<p>Podemos ver el histórico de un deployment.</p>
+<div class="highlight"><pre><span></span><code>kubectl rollout <span class="nb">history</span> deployment nginx
+</code></pre></div>
+<p>El resultado nos muestra una lista con las diferentes versiones, desde la más antigua hasta la más nueva. Si queremos conocer más sobre una versión específica podemos utilizar el flag <code>--revision</code>, al que deberemos indicar el número de la columna <strong>Revision</strong>.</p>
+<p>Es importante mantener actualizada la key <strong>annotations</strong>, ya que esta recibe la descipción de los cambios que hemos realizado en la versión que vamos a desplegar. Además es la información que aparece en la columna <strong>Change-cause</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">template</span><span class="p">:</span>
+    <span class="nt">metadata</span><span class="p">:</span>
+      <span class="nt">annotations</span><span class="p">:</span>
+        <span class="nt">kubernetes.io/change-cause</span><span class="p">:</span> <span class="s">&quot;Actualización</span><span class="nv"> </span><span class="s">versión</span><span class="nv"> </span><span class="s">2&quot;</span>
+</code></pre></div>
+<p>Al igual que con otros objetos, podemos interactuar con este modificando su configuración "al vuelo" o modificando el manifiesto (lo más recomendable).</p>
+<div class="highlight"><pre><span></span><code>kubectl rollout undo deployment nginx
+</code></pre></div>
+<p>Este comando nos permite volver a la versión anterior del Pod nginx. Podemos utilizar el flag <code>--to-revision</code> para volver a una versión específica.</p>
+<div class="highlight"><pre><span></span><code>kubectl rollout undo deployment nginx --to-revision<span class="o">=</span><span class="m">2</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Lo más recomendable es actualizar el manifiesto, modificar la versión y aplicarla con el comando <code>kubectl apply</code>.</p>
+</div>
+<p>Disponemos de dos estrategias diferentes para el despliegue de nuevas versiones:</p>
+<ul>
+<li>
+<p><strong>Recreate</strong>: esta estrategia no se utilizar para entornos de producción. El funcionamiento es sencillo y rápido, el ReplicaSet se encarga de las actualizaciones parando todas las instancias y recreandolas. No hay ningún tipo de control sobre los updates, por lo tanto tendremos el servicio parado durante un determinado tiempo y además es posible que este no vuelva a inciarse correctamente.</p>
+</li>
+<li>
+<p><strong>RollingUpdate</strong>: es una estrategia más sofisticada y robusta que la anterior, pero implicia mayor demora en la actualización de todas la instancias. La actulización se va aplicando de forma incremental, actualizando las instancias en bloques hasta que todas hayan recibido la actualización. De este modo evitamos que haya una parada del servicio y en caso de fallo de la actualización que el servicio no vuelva a iniciarse. Esta estrategia mantiene durante el periodo de actualización tanto la nueva versión como la anterior funcionando de forma concurrente.</p>
+</li>
+</ul>
+<p>Disponemos de varias configuraciones</p>
+<ul>
+<li>
+<p><strong>maxUnavailable</strong>: se establece el número máximo de Pods que pueden no estar disponibles durante la actualización. </p>
+</li>
+<li>
+<p><strong>maxSurge</strong>: controla cuantos recursos extras podemos definir para llevar a cabo la actualización. Si por ejemplo asignamos 50% sobre 10 Pods, creará 5 Pods extra durante la actualización para realizar el despliegue, para mantener 10 Pods de la versión anterior siempre en funcionamiento hasta que la actualización haya finalizado con éxito.</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">strategy</span><span class="p">:</span>
+    <span class="nt">rollingUpdate</span><span class="p">:</span>
+      <span class="nt">maxUnavailable</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">50%</span>
+      <span class="nt">maxSurge</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">50%</span>
+    <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RollingUpdate</span>
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>En ambas configuraciones se puede definir como número entero o en porcentaje.</p>
+</div>
+<p>El <strong>RollingUpdate</strong> es la estrategia más adecuada porque es un despliegue por etapas, lo que asegura que las actualizaciones terminarán en estado <em>healthy</em>. El estado de cada Pod actualizado se determina con los <strong>readiness checks</strong>.</p>
+<p>Ademas:</p>
+<ul>
+<li><strong>minReadySeconds</strong>: es el tiempo mínimo de espera por cada etapa para poder pasar a la siguiente.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">minReadySencods</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">60</span>
+</code></pre></div>
+<ul>
+<li><strong>progressDeadlineSeconds</strong>: en este caso se indica el tiempo máximo que debe esperar por cada etapa. </li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">progressDeadlineSeconds</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">300</span>
+</code></pre></div>
+<h3 id="services">Services<a class="headerlink" href="#services" title="Permanent link">#</a></h3>
+<p>Según la definición que podemos encontrar en la <a href="https://kubernetes.io/docs/concepts/services-networking/service/">documentación oficial</a> de Kubernetes, es una forma abstracta de exponer una aplicación que se encuentra en uno o más Pods como un servicio de red.</p>
+<p>Una de las razones de la existencia de este objeto es la efimeridad de los Pods, estos pueden <em>morir</em> y volver a <em>nacer</em>, por lo que a lo largo del tiempo la dirección IP de los Pods puede cambiar. Si disponemos de un conjunto de Pods que deben interactuar entre ellos (frontend vs backend) necesitamos una formula para que estos puedan comunicarse sin depender de su dirección IP.</p>
+<p>Los servicios son un <strong>endpoint</strong> permanente (punto de entrada) que nos permite acceder a un conjunto de Pods. Un servicio utiliza los <strong>labels</strong> para <em>reconocer</em> los Pods que deben estar detrás de un servicio.</p>
+<p>Kubernetes nos ofrece tres tipos de servicios:</p>
+<ul>
+<li>
+<p><strong>ClusterIP</strong> (es el tipo de servicio por defecto): este servicio es expuesto con una dirección IP interna del clúster, por lo tanto solo es accesible desde dentro del clúster. </p>
+</li>
+<li>
+<p><strong>NodePort</strong>: este servicio expone un puerto de forma estática en todos los nodos, por lo que nuestros Pods serán accesibles desde el exterior realizando una petición a <code>IP:Puerto</code>.</p>
+</li>
+<li>
+<p><strong>LoadBalancer</strong>: es un servicio utilizado en Plataformas Cloud que lo que ofrece es una única dirección IP que reenviará todo el tráfico al servicio correspondiente, que se encargará de realizar el reenvío a los Pods.</p>
+</li>
+</ul>
+<h3 id="debug">Debug<a class="headerlink" href="#debug" title="Permanent link">#</a></h3>
+<p>Hay formas muy avanzadas de gestionar los logs, aunque kubectl nos proporciona un comando para ello.</p>
+<div class="highlight"><pre><span></span><code>kubectl logs pod
+</code></pre></div>
+<p>Si queremos mantener la terminal actualizada con la salida de los logs podemos utilizar el flag <code>-f</code>. Además, si el pod contiene más de un contenedor la opción <code>-c contenedor</code> nos permite revisar los logs de un contenedor en particular.</p>
+<p>En el caso de que la información mostrada con los anteriores comandos no sea suficiente, podemos "entrar" dentro del contendor para buscar de forma más precisa posibles errores que hayan surgido.</p>
+<div class="highlight"><pre><span></span><code>kubectl <span class="nb">exec</span> -it pod -- bash
+</code></pre></div>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="https://kubernetes.io/es/docs/tasks/tools/install-kubectl/#habilitar-el-auto-completado-en-el-int%C3%A9rprete-de-comandos">Autocompletado kubectl</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Pie">
+        
+          <a href="../introduccion-kubernetes/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Anterior
+                </span>
+                Introducción a Kubernetes
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../kubernetes-raspberrypi/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Siguiente
+                </span>
+                Kubernetes en Raspberry Pi
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2020 Tzinm
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/tzinm" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://hub.docker.com/u/tzinm" target="_blank" rel="noopener" title="hub.docker.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://t.me/tzinm" target="_blank" rel="noopener" title="t.me" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9l-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239.1-92.2c11.1-4 20.8 2.7 17.2 19.5z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/tzinm1" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.7e0ee788.min.js"></script>
+      <script src="../../assets/javascripts/bundle.b3a72adc.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copiar al portapapeles", "clipboard.copied": "Copiado al portapapeles", "search.config.lang": "es", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "B\u00fasqueda", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: ['navigation.tabs', 'navigation.instant'],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
