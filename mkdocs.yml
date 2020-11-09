@@ -21,7 +21,7 @@ theme:
     text: PT Sans
     code: PT Sans Mono
   icon:
-#    logo: octicons/book
+    logo: iconos/notebook
     repo: fontawesome/brands/github
   features:
     - navigation.tabs
